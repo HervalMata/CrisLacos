@@ -5,6 +5,7 @@ namespace CrisLacos\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Category;
+use CrisLacos\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -35,8 +36,8 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Category $category
+     * @return Category
      */
     public function show(Category $category)
     {
@@ -46,9 +47,9 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @param Category $category
+     * @return Category
      */
     public function update(CategoryRequest $request, Category $category)
     {
@@ -63,8 +64,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Category $category
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy(Category $category)
     {
