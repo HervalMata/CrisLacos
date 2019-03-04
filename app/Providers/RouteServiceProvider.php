@@ -2,8 +2,11 @@
 
 namespace CrisLacos\Providers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use CrisLacos\Models\Category;
+use CrisLacos\Models\Product;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,18 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind('category', function ($value) {
+            /** @var Collection $collection */
+            $collection = Category::whereId($value)->orWhere('Slug', $value)->get();
+            return $collection->first();
+        });
+
+        Route::bind('product', function ($value) {
+            /** @var Collection $collection */
+            $collection = Product::whereId($value)->orWhere('Slug', $value)->get();
+            return $collection->first();
+        });
     }
 
     /**
