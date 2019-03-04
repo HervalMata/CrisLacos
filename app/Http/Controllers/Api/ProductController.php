@@ -70,6 +70,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return response([], 204);
+        return response()->json([], 204);
     }
 }
