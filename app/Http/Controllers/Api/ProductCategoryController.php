@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Product;
 use CrisLacos\Http\Requests\ProductCategoryRequest;
+use CrisLacos\Http\Resources\ProductCategoryResource;
 
 class ProductCategoryController extends Controller
 {
@@ -14,11 +15,11 @@ class ProductCategoryController extends Controller
      * Display a listing of the resource.
      *
      * @param Product $product
-     * @return \Illuminate\Http\Response
+     * @return ProductCategoryResource
      */
     public function index(Product $product)
     {
-        return $product->categories;
+        return new ProductCategoryResource($product);
     }
 
     /**
@@ -34,7 +35,7 @@ class ProductCategoryController extends Controller
         $categoriesAttachedId = $changed['attached'];
         $categories = Category::whereIn('id', $categoriesAttachedId)->get();
 
-        return $categories->count() ? response()->json($categories, 201) : [];
+        return $categories->count() ? response()->json(new ProductCategoryResource($product), 201) : [];
     }
 
     /**
