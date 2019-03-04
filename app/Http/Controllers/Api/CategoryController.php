@@ -6,42 +6,43 @@ use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Category;
 use CrisLacos\Http\Requests\CategoryRequest;
+use CrisLacos\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return CategoryResource
      */
     public function index()
     {
-        return Category::all();
+        return CategoryResource::collection(Category::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @return CategoryResource
      */
     public function store(CategoryRequest $request)
     {
         $category = Category::create($request->all());
         $category->refresh();
 
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
      * Display the specified resource.
      *
      * @param Category $category
-     * @return Category
+     * @return CategoryResource
      */
     public function show(Category $category)
     {
-        return $category;
+        return new CategoryResource($category);
     }
 
     /**
