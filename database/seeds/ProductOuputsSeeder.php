@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use CrisLacos\Models\ProductInput;
+use CrisLacos\Models\ProductOutput;
 use CrisLacos\Models\Product;
 
-class ProductInputsSeeder extends Seeder
+class ProductOutputsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,13 +14,13 @@ class ProductInputsSeeder extends Seeder
     public function run()
     {
         $products = Product::all();
-        factory(ProductInput::class, 200)
+        factory(ProductOutput::class, 200)
             ->make()
-            ->each(function ($input) use ($products) {
+            ->each(function ($ouput) use ($products) {
                 $product = $products->random();
-                $input->product_id = $products->random()->id;
-                $input->save();
-                $product->save();
+                $ouput->product_id = $products->random()->id;
+                $ouput->save();
+                //$product->save();
             });
     }
 }

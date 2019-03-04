@@ -29,7 +29,8 @@ class ProductInputController extends Controller
      */
     public function store(Request $request, Product $product)
     {
-        return ProductInput::create($request->all());
+        $input = ProductInput::create($request->all());
+        return ProductInput::create($input);
     }
 
     /**
