@@ -7,9 +7,11 @@ use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\User;
 use CrisLacos\Http\Requests\UserRequest;
 use CrisLacos\Http\Resources\UserResource;
+use CrisLacos\Common\OnlyTrashed;
 
 class UserController extends Controller
 {
+    use OnlyTrashed;
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +20,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $query = User::query();
+        $query = $this->onlyTrashedIfRequested($request, $query);
         $users = User::paginate(10);
         return UserResource::collection($users);
     }
@@ -30,7 +34,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $user = User::createCustom($request->all());
+        $user = User::create($request->all());
         return new UserResource($user);
     }
 
@@ -50,21 +54,26 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return UserResource
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user->fill($request->all());
+        $user->save();
+
+        return new UserResource($user);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param User $user
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json([], 204);
     }
 }

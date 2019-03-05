@@ -2,14 +2,18 @@
 
 namespace CrisLacos\Providers;
 
+use CrisLacos\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use CrisLacos\Models\Category;
 use CrisLacos\Models\Product;
+use CrisLacos\Common\OnlyTrashed;
+use Illuminate\Http\Request;
 
 class RouteServiceProvider extends ServiceProvider
 {
+    use OnlyTrashed;
     /**
      * This namespace is applied to your controller routes.
      *
@@ -31,17 +35,28 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('category', function ($value) {
-            $query = Product::query();
-            $query = $this->onlyTrashedIfRequested($query);
             /** @var Collection $collection */
             $collection = Category::whereId($value)->orWhere('Slug', $value)->get();
             return $collection->first();
         });
 
         Route::bind('product', function ($value) {
+            $query = Product::query();
+            $request = app(Request::class);
+            $query = $this->onlyTrashedIfRequested($request, $query);
             /** @var Collection $collection */
-            $collection = Product::whereId($value)->orWhere('Slug', $value)->get();
+            $collection = $query->whereId($value)->orWhere('Slug', $value)->get();
             return $collection->first();
+        });
+
+        Route::bind('user', function ($value) {
+            $query = User::query();
+            $request = app(Request::class);
+            $query = $this->onlyTrashedIfRequested($request, $query);
+            /** @var Collection $collection */
+            //$collection = $query->whereId($value)->orWhere('Slug', $value)->get();
+            //return $collection->first();
+            return $query->find($value);
         });
     }
 
@@ -88,10 +103,4 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api.php'));
     }
 
-    private function onlyTrashedIfRequested(\Illuminate\Database\Eloquent\Builder $query)
-    {
-        if (\Request::get('trashed') == 1) {
-            $query = $query->onlyTrashed();
-        }
-    }
 }

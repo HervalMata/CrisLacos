@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Product;
 use CrisLacos\Http\Resources\ProductResource;
-use Illuminate\Database\Eloquent\Builder;
+use CrisLacos\Common\OnlyTrashed;
 
 class ProductController extends Controller
 {
+    use OnlyTrashed;
     /**
      * Display a listing of the resource.
      *
@@ -79,19 +80,6 @@ class ProductController extends Controller
         return response()->json([], 204);
     }
 
-    /**
-     * @param Request $request
-     * @param Builder $query
-     * @return Builder
-     */
-    private function onlyTrashedIfRequested(Request $request, Builder $query)
-    {
-        if ($request->get('trashed') == 1) {
-            $query = $query->onlyTrashed();
-        }
-
-        return $query;
-    }
 
     public function restore(Product $product)
     {
