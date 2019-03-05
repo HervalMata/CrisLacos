@@ -10,7 +10,8 @@ import { CategoryListComponent } from './components/pages/category/category-list
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'categories/list', component: CategoryListComponent}
+    { path: 'categories/list', component: CategoryListComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full'}
 ]
 
 @NgModule({
