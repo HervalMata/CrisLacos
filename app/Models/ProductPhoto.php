@@ -3,6 +3,7 @@
 namespace CrisLacos\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class ProductPhoto extends Model
 {
@@ -16,5 +17,24 @@ class ProductPhoto extends Model
     {
         $path = self::PRODUCTS_PATH;
         return storage_path("{$path}/{$productId}");
+    }
+
+    /**
+     * @param $productId
+     * @param array $files
+     */
+    public static function uploadFiles($productId, array $files)
+    {
+        $dir = self::photoDir($productId);
+        /** @var UploadedFile $file */
+        foreach ($files as $file) {
+            $file->store($dir, ['disk' => 'public']);
+        }
+    }
+
+    private static function photoDir($productId)
+    {
+        $dir = self::DIR_PRODUCTS;
+        return "{$dir}/{$productId}";
     }
 }
