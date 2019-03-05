@@ -10,6 +10,6 @@ use Faker\Generator as Faker;
 
 $factory->define(CrisLacos\Models\ProductInput::class, function (Faker $faker) {
     return [
-        'amount' => $faker->randomNumber(1, 20)
+        'amount' => $faker->numberBetween(5, 20)
     ];
 });
