@@ -129,7 +129,7 @@ class ProductPhoto extends Model
      */
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 
     /**
@@ -153,6 +153,25 @@ class ProductPhoto extends Model
             if (file_exists($photoPath)) {
                 \File::delete($photoPath);
             }
+        }
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function deleteWithPhoto() : bool
+    {
+        try {
+            \DB::beginTransaction();
+            $this->deletePhoto($this->file_name);
+            $result = $this->delete();
+            \DB::commit();
+
+            return $result;
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            throw $e;
         }
     }
 }

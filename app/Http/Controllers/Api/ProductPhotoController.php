@@ -41,7 +41,7 @@ class ProductPhotoController extends Controller
      */
     public function show(Product $product, ProductPhoto $photo)
     {
-        $this->assertProductPhoto($photo, $product);
+        $this->assertProductPhoto($product, $photo);
 
         return new ProductPhotoResource($photo);
     }
@@ -55,7 +55,7 @@ class ProductPhotoController extends Controller
      */
     public function update(Request $request, Product $product, ProductPhoto $photo)
     {
-        $this->assertProductPhoto($photo, $product);
+        $this->assertProductPhoto($product, $photo);
         $photo = $photo->updateWithPhoto($request->photo);
         return new ProductPhotoResource($photo);
     }
@@ -66,9 +66,11 @@ class ProductPhotoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product, ProductPhoto $photo)
     {
-        //
+        $this->assertProductPhoto($product, $photo);
+        $photo->deleteWithPhoto();
+        return response()->json([], 204);
     }
 
     private function assertProductPhoto(ProductPhoto $photo, Product $product)

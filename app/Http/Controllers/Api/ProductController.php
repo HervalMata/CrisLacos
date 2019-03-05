@@ -7,17 +7,21 @@ use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Product;
 use CrisLacos\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return ProductResource
+     * @param Request $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginete(10);
+        $query = Product::query();
+        $query = $this->onlyTrashedIfRequested($request, $query);
+        $products = $query->paginete(10);
         return ProductResource::collection($products);
     }
 
@@ -73,5 +77,19 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json([], 204);
+    }
+
+    /**
+     * @param Request $request
+     * @param Builder $query
+     * @return Builder
+     */
+    private function onlyTrashedIfRequested(Request $request, Builder $query)
+    {
+        if ($request->get('trashed') == 1) {
+            $query = $query->onlyTrashed();
+        }
+
+        return $query;
     }
 }

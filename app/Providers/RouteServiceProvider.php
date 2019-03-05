@@ -31,6 +31,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         Route::bind('category', function ($value) {
+            $query = Product::query();
+            $query = $this->onlyTrashedIfRequested($query);
             /** @var Collection $collection */
             $collection = Category::whereId($value)->orWhere('Slug', $value)->get();
             return $collection->first();
@@ -84,5 +86,12 @@ class RouteServiceProvider extends ServiceProvider
              ->middleware('api')
              ->namespace($this->namespace)
              ->group(base_path('routes/api.php'));
+    }
+
+    private function onlyTrashedIfRequested(\Illuminate\Database\Eloquent\Builder $query)
+    {
+        if (\Request::get('trashed') == 1) {
+            $query = $query->onlyTrashed();
+        }
     }
 }
