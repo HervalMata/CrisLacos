@@ -92,4 +92,11 @@ class ProductController extends Controller
 
         return $query;
     }
+
+    public function restore(Product $product)
+    {
+        $product->restore();
+
+        return response()->json([], 204);
+    }
 }
