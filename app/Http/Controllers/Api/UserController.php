@@ -2,6 +2,7 @@
 
 namespace CrisLacos\Http\Controllers\Api;
 
+use CrisLacos\Events\UserCreatedEvent;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\User;
@@ -35,6 +36,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $user = User::create($request->all());
+        event(new UserCreatedEvent($user));
         return new UserResource($user);
     }
 
