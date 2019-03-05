@@ -2,6 +2,7 @@
 
 namespace CrisLacos\Http;
 
+use CrisLacos\Http\Middleware\CorsMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -19,6 +20,7 @@ class Kernel extends HttpKernel
         \CrisLacos\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \CrisLacos\Http\Middleware\TrustProxies::class,
+        CorsMiddleware::class,
     ];
 
     /**
