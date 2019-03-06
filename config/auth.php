@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => CrisLacos\User::class,
+            'model' => CrisLacos\Models\User::class,
         ],
 
         // 'users' => [
