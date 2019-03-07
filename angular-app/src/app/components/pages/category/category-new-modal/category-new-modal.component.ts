@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
+import {Category} from "../../../../model";
 
 @Component({
   selector: 'category-new-modal',
@@ -9,7 +10,7 @@ import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 })
 export class CategoryNewModalComponent implements OnInit {
 
-    category = {
+    category: Category = {
         name: '',
         active: true
     };

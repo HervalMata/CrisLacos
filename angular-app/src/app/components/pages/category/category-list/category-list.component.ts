@@ -4,6 +4,8 @@ import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {CategoryNewModalComponent} from "../category-new-modal/category-new-modal.component";
 import {CategoryEditModalComponent} from "../category-edit-modal/category-edit-modal.component";
 import {CategoryDeleteModalComponent} from "../category-delete-modal/category-delete-modal.component";
+import {Category} from "../../../../model";
+import {CategoryHttpService} from "../../../../services/http/category-http.service";
 
 declare let $;
 
@@ -14,7 +16,7 @@ declare let $;
 })
 export class CategoryListComponent implements OnInit {
 
-    categories: Array<{id: number, name: string, active: boolean, created_at: {date: string}}> = [];
+    categories: Array<Category> = [];
 
     @ViewChild(CategoryNewModalComponent)
     categoryNewModal: CategoryNewModalComponent;
@@ -27,7 +29,10 @@ export class CategoryListComponent implements OnInit {
 
     categoryId: number;
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private categoryHttp: CategoryHttpService
+        ) {
 //      console.log('construtor');
     }
 
@@ -77,13 +82,9 @@ export class CategoryListComponent implements OnInit {
     }
 
     getCategories() {
-        const token = window.localStorage.getItem('token'); // Pega o token da API.
-        this.http.get<{data: Array<{id: number, name: string, active: boolean, created_at: {date: string}}>}>
-        ('http://localhost:8000/api/categories', {
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        }).subscribe((response) => this.categories = response.data);
+
+        this.categoryHttp.list().
+            subscribe((response) => {this.categories = response.data});
     }
 
 }
