@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/pages/login/login.component';
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
-import {RouterModule, Routes} from "@angular/router";
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {RouterModule, Routes} from '@angular/router';
 import { CategoryListComponent } from './components/pages/category/category-list/category-list.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'categories/list', component: CategoryListComponent},
-    { path: '', redirectTo: '/login', pathMatch: 'full'}
+    { path: 'categories/list', component: CategoryListComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' }
 ]
 
 @NgModule({
