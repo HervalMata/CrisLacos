@@ -49,6 +49,15 @@ export class CategoryListComponent implements OnInit {
         console.log($event);
     }
 
+    onEditSuccess($event: any) {
+        console.log($event);
+        this.getCategories();
+    }
+
+    onEditError($event: HttpErrorResponse) {
+        console.log($event);
+    }
+
     getCategories() {
         const token = window.localStorage.getItem('token'); // Pega o token da API.
         this.http.get<{data: Array<{id: number, name: string, active: boolean, created_at: {date: string}}>}>
