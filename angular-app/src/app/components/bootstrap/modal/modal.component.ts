@@ -36,7 +36,7 @@ export class ModalComponent implements OnInit {
   }
 
   private getJQueryElement() {
-        const nativeElement = this.element.nativeElement;
-        return $(nativeElement.firstChild);
+      const nativeElement = this.element.nativeElement;
+      return $(nativeElement.firstChild);
   }
 }

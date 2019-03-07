@@ -10,7 +10,8 @@ import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 export class CategoryNewModalComponent implements OnInit {
 
     category = {
-        name: ''
+        name: '',
+        active: true
     };
 
     @ViewChild(ModalComponent)
