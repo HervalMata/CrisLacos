@@ -30,7 +30,6 @@ export class CategoryListComponent implements OnInit {
     categoryId: number;
 
     constructor(
-        private http: HttpClient,
         private categoryHttp: CategoryHttpService
         ) {
 //      console.log('construtor');
