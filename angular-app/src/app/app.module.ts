@@ -13,6 +13,10 @@ import { CategoryEditModalComponent } from './components/pages/category/category
 import { CategoryNewModalComponent } from './components/pages/category/category-new-modal/category-new-modal.component';
 import { CategoryDeleteModalComponent } from './components/pages/category/category-delete-modal/category-delete-modal.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import { ProductDeleteModalComponent } from './components/pages/product/product-delete-modal/product-delete-modal.component';
+import { ProductEditModalComponent } from './components/pages/product/product-edit-modal/product-edit-modal.component';
+import { ProductListComponent } from './components/pages/product/product-list/product-list.component';
+import { ProductNewModalComponent } from './components/pages/product/product-new-modal/product-new-modal.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -29,7 +33,11 @@ const routes: Routes = [
     ModalComponent,
     CategoryEditModalComponent,
     CategoryNewModalComponent,
-    CategoryDeleteModalComponent
+    CategoryDeleteModalComponent,
+    ProductDeleteModalComponent,
+    ProductEditModalComponent,
+    ProductListComponent,
+    ProductNewModalComponent
   ],
   imports: [
     BrowserModule,
