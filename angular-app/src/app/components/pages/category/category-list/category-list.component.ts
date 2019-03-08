@@ -8,6 +8,7 @@ import {Category} from "../../../../model";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
 import PNotify from 'pnotify/dist/es/PNotify';
 import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons';
+import {NotifyMessageService} from "../../../../services/notify-message.service";
 
 declare let $;
 
@@ -32,7 +33,8 @@ export class CategoryListComponent implements OnInit {
     categoryId: number;
 
     constructor(
-        private categoryHttp: CategoryHttpService
+        private categoryHttp: CategoryHttpService,
+        private notifyMessage: NotifyMessageService
         ) {
 //      console.log('construtor');
     }
@@ -56,12 +58,14 @@ export class CategoryListComponent implements OnInit {
     }
 
     onInsertSuccess($event: any) {
+        this.notifyMessage.success(`Categoria cadastrada com sucesso!.`);
         console.log($event);
         this.getCategories();
     }
 
     onInsertError($event: HttpErrorResponse) {
         console.log($event);
+        this.notifyMessage.error(`Erro ao cadastrar a categoria!.`);
     }
 
     onEditSuccess($event: any) {
@@ -80,15 +84,11 @@ export class CategoryListComponent implements OnInit {
 
     onDeleteError($event: HttpErrorResponse) {
         console.log($event);
-    }
-
-    showNotify() {
-        PNotifyButtons;
-        PNotify.alert({text: 'Hello World', type: 'success'});
+        this.notifyMessage.error(`Não foi possível excluir a categoria!
+            Verifique se a mesma não está relacionada com produtos.`);
     }
 
     getCategories() {
-
         this.categoryHttp.list().
             subscribe((response) => {this.categories = response.data});
     }
