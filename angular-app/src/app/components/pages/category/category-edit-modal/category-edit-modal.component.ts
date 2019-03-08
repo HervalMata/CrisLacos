@@ -26,7 +26,6 @@ export class CategoryEditModalComponent implements OnInit {
   modal: ModalComponent;
 
   constructor(
-      private http: HttpClient,
       private categoryHttp: CategoryHttpService
       ) { }
 

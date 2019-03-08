@@ -23,7 +23,6 @@ export class CategoryDeleteModalComponent implements OnInit {
   modal: ModalComponent;
 
   constructor(
-      private http: HttpClient,
       private categoryHttp: CategoryHttpService
               ) { }
 
@@ -42,13 +41,8 @@ export class CategoryDeleteModalComponent implements OnInit {
   }
 
   destroy(){
-     const token = window.localStorage.getItem('token');
-     this.http.put
-     (`http://localhost:8000/api/categories/${this._categoryId}`, {
-          headers: {
-             'Authorization' : `Bearer ${token}`
-          }
-      }).subscribe((category) => {
+      this.categoryHttp.destroy(this._categoryId).
+      subscribe((category) => {
           this.onSuccess.emit(category);
           this.modal.hide();
       }, error => this.onError.emit(error));

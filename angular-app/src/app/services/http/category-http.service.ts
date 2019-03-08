@@ -60,7 +60,12 @@ export class CategoryHttpService {
       );
   }
 
-  destroy() {
-
+  destroy(id: number) {
+      return this.http.delete<{data: Category}>
+      (`${this.baseUrl}/${id}`,{
+          headers: {
+              'Authorization' : `Bearer ${this.token}`
+          }
+      });
   }
 }
