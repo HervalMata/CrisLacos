@@ -48,8 +48,16 @@ export class CategoryHttpService {
        );
   }
 
-  update() {
-
+  update(id: number, data: Category) {
+      return this.http.put<{data: Category}>
+      (`${this.baseUrl}/${id}`, data,{
+          headers: {
+              'Authorization' : `Bearer ${this.token}`
+          }
+      })
+      .pipe(
+         map(response => response.data )
+      );
   }
 
   destroy() {

@@ -45,13 +45,8 @@ export class CategoryEditModalComponent implements OnInit {
   }
 
     submit(){
-        const token = window.localStorage.getItem('token');
-        this.http.put
-        (`http://localhost:8000/api/categories/${this._categoryId}`, this.category, {
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        }).subscribe((category) => {
+        this.categoryHttp.update(this._categoryId, this.category)
+            .subscribe((category) => {
             this.onSuccess.emit(category);
             this.modal.hide();
         }, error => this.onError.emit(error));

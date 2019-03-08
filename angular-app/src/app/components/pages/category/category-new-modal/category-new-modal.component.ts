@@ -22,13 +22,13 @@ export class CategoryNewModalComponent implements OnInit {
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
-  constructor(private CategoryHttp: CategoryHttpService) { }
+  constructor(private categoryHttp: CategoryHttpService) { }
 
   ngOnInit() {
   }
 
   submit(){
-      this.CategoryHttp.create(this.category)
+      this.categoryHttp.create(this.category)
       .subscribe((category) => {
         this.onSuccess.emit(category);
         this.modal.hide();
