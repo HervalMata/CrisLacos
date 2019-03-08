@@ -9,6 +9,9 @@ import {CategoryHttpService} from "../../../../services/http/category-http.servi
 import PNotify from 'pnotify/dist/es/PNotify';
 import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons';
 import {NotifyMessageService} from "../../../../services/notify-message.service";
+import {CategoryInsertService} from "./category-insert.service";
+import {CategoryEditService} from "./category-edit.service";
+import {CategoryDeleteService} from "./category-delete.service";
 
 declare let $;
 
@@ -34,58 +37,18 @@ export class CategoryListComponent implements OnInit {
 
     constructor(
         private categoryHttp: CategoryHttpService,
-        private notifyMessage: NotifyMessageService
+        private notifyMessage: NotifyMessageService,
+        protected categoryInsertService: CategoryInsertService,
+        protected categoryEditService: CategoryEditService,
+        protected categoryDeleteService: CategoryDeleteService
         ) {
-//      console.log('construtor');
+        this.categoryInsertService;
+        this.categoryEditService;
+        this.categoryDeleteService;
     }
 
     ngOnInit() {
         this.getCategories();
-    }
-
-    showModalInsert() {
-        this.categoryNewModal.showModal();
-    }
-
-    showModalEdit(categoryId: number) {
-        this.categoryId = categoryId;
-        this.categoryEditModal.showModal();
-    }
-
-    showModalDelete(categoryId: number) {
-        this.categoryId = categoryId;
-        this.categoryEditModal.showModal();
-    }
-
-    onInsertSuccess($event: any) {
-        this.notifyMessage.success(`Categoria cadastrada com sucesso!.`);
-        console.log($event);
-        this.getCategories();
-    }
-
-    onInsertError($event: HttpErrorResponse) {
-        console.log($event);
-        this.notifyMessage.error(`Erro ao cadastrar a categoria!.`);
-    }
-
-    onEditSuccess($event: any) {
-        console.log($event);
-        this.getCategories();
-    }
-
-    onEditError($event: HttpErrorResponse) {
-        console.log($event);
-    }
-
-    onDeleteSuccess($event: any) {
-        console.log($event);
-        this.getCategories();
-    }
-
-    onDeleteError($event: HttpErrorResponse) {
-        console.log($event);
-        this.notifyMessage.error(`Não foi possível excluir a categoria!
-            Verifique se a mesma não está relacionada com produtos.`);
     }
 
     getCategories() {
