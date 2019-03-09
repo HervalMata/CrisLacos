@@ -11,7 +11,7 @@ import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 export class CategoryHttpService implements HttpResource<Category> {
 
   variavel = 'Herval';
-  private baseUrl = 'http://localhost:8000/api/categories';
+  private baseUrl = '${enviroment.api.url}/categories';
   private token = window.localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }

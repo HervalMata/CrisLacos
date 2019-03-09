@@ -20,7 +20,7 @@ export class AuthService {
   }
 
   login(user: {email: string, password: string}) : Observable<{token: string}> {
-    return this.http.post<{token: string}>('http://localhost:8000/api/login', user)
+    return this.http.post<{token: string}>('${enviroment.api.url}/login', user)
         .pipe(
             tap(response => {
               this.setToken(response.token)
@@ -30,7 +30,7 @@ export class AuthService {
 
   logout() : Observable<any> {
       return this.http.
-            post<{token: string}>('http://localhost:8000/api/logout', {})
+            post<{token: string}>('${enviroment.api.url}/logout', {})
           .pipe(
               tap(() => {
                   this.setToken(null)

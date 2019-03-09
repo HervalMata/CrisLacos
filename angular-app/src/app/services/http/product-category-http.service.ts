@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 })
 export class ProductCategoryHttpService {
 
-  private baseApi = 'http://localhost:8000/api';
+  private baseApi = '${enviroment.api.url}';
   private token = window.localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }

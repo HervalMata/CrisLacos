@@ -10,7 +10,7 @@ import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 })
 export class ProductHttpService implements HttpResource<Product> {
 
-    private baseUrl = 'http://localhost:8000/api/products';
+    private baseUrl = '${enviroment.api.url}/products';
     private token = window.localStorage.getItem('token');
 
     constructor(private http: HttpClient) { }

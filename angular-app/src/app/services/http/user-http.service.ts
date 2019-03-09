@@ -11,7 +11,7 @@ import {AuthService} from "../auth.service";
 })
 export class UserHttpService {
 
-    private baseUrl = 'http://localhost:8000/api/users';
+    private baseUrl = '${enviroment.api.url}/users';
     private token = this.authService.getToken();
 
     constructor(
