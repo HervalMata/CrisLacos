@@ -19,10 +19,13 @@ import { ProductListComponent } from './components/pages/product/product-list/pr
 import { ProductNewModalComponent } from './components/pages/product/product-new-modal/product-new-modal.component';
 import { NumberFormatBrPipe } from './pipes/number-format-br.pipe';
 import { ProductViewModalComponent } from './components/pages/product/product-view-modal/product-view-modal.component';
+import { ProductCategoryListComponent } from './components/pages/product-category/product-category-list/product-category-list.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'categories/list', component: CategoryListComponent },
+    { path: 'products/:product/categories/list', component: ProductCategoryListComponent},
+    { path: 'products/list', component: ProductListComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' }
 ]
 
@@ -41,7 +44,8 @@ const routes: Routes = [
     ProductListComponent,
     ProductNewModalComponent,
     NumberFormatBrPipe,
-    ProductViewModalComponent
+    ProductViewModalComponent,
+    ProductCategoryListComponent
   ],
   imports: [
     BrowserModule,
