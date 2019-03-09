@@ -43,4 +43,9 @@ export class AuthService {
      // @ts-ignore
       this.me = decodeToken ? {id: decodeToken.sub, name: decodeToken.name, email: decodeToken.email} : null;
   }
+
+  isAuth() : boolean {
+      const token = this.getToken();
+      return !new JwtHelperService().isTokenExpired(token, 30);
+  }
 }
