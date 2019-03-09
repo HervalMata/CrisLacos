@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
-import { Product } from "../../model";
+import {Category, Product} from "../../model";
 import {map} from "rxjs/operators";
-import {HttpResource} from "./http-resource";
+import {HttpResource, SearchParams} from "./http-resource";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +15,19 @@ export class ProductHttpService implements HttpResource<Product> {
 
     constructor(private http: HttpClient) { }
 
-    list(page: number) : Observable<{data: Array<Product>, meta: any}> {
+    list(searchParams: SearchParams) : Observable<{data: Array<Product>, meta: any}> {
+        const sParams: any = {
+            page: searchParams.page + ""
+
+        };
+
+        if (searchParams.all) {
+            sParams.all = '1';
+            delete sParams.page;
+        }
+
         const params = new HttpParams({
-            fromObject: {
-                page: page + ""
-            }
+            fromObject: sParams
         });
         return this.http.get<{data: Array<Product>, meta: any}>
         (this.baseUrl, {

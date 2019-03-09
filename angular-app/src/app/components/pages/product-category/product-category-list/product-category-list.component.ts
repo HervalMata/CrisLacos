@@ -19,6 +19,7 @@ export class ProductCategoryListComponent implements OnInit {
 
   constructor(
       private route: ActivatedRoute,
+      private productHttp: ProductHttpService,
       private productCategoryHttp: ProductCategoryHttpService,
   ) { }
 
