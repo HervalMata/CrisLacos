@@ -38,6 +38,7 @@ export class CategoryListComponent implements OnInit {
     categoryDeleteModal: CategoryDeleteModalComponent;
 
     categoryId: number;
+    searchText: string;
 
     constructor(
         private categoryHttp: CategoryHttpService,
@@ -58,7 +59,8 @@ export class CategoryListComponent implements OnInit {
     getCategories() {
         this.categoryHttp.list({
             page: this.pagination.page,
-            sort: this.sortColumn.column === '' ? null : this.sortColumn
+            sort: this.sortColumn.column === '' ? null : this.sortColumn,
+            search: this.searchText
         }).
             subscribe((response) => {
                 this.categories = response.data;
@@ -73,6 +75,12 @@ export class CategoryListComponent implements OnInit {
     }
 
     sort(sortColumn) {
+        this.getCategories();
+    }
+
+    search(search) {
+        console.log(search);
+        this.searchText = search;
         this.getCategories();
     }
 

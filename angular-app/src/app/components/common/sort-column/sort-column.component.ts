@@ -1,7 +1,7 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-  selector: '[sortcolumn]',
+  selector: '[sortColumn]',
   templateUrl: './sort-column.component.html',
   styleUrls: ['./sort-column.component.css']
 })
