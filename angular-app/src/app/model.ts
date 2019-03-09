@@ -20,7 +20,7 @@ export interface Product {
 
 export interface ProductCategory {
     product: Product;
-    category: Category[];
+    categories: Category[];
 }
 
 export interface User {
