@@ -28,6 +28,16 @@ export class AuthService {
         );
   }
 
+  logout() : Observable<any> {
+      return this.http.
+            post<{token: string}>('http://localhost:8000/api/logout', {})
+          .pipe(
+              tap(() => {
+                  this.setToken(null)
+              })
+          );
+  }
+
 
   setToken(token: string) {
       this.setUserFromToken(token);
