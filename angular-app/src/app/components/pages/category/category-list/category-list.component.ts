@@ -48,9 +48,9 @@ export class CategoryListComponent implements OnInit {
         protected categoryEditService: CategoryEditService,
         protected categoryDeleteService: CategoryDeleteService
         ) {
-        this.categoryInsertService;
-        this.categoryEditService;
-        this.categoryDeleteService;
+        this.categoryInsertService.categoryListComponent = this;
+        this.categoryEditService.categoryListComponent = this;
+        this.categoryDeleteService.categoryListComponent = this;
     }
 
     ngOnInit() {

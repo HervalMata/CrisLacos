@@ -28,8 +28,8 @@ import { UserDeleteModalComponent } from './components/pages/user/user-delete-mo
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'categories/list', component: UserListComponent },
-    { path: 'users/list', component: CategoryListComponent },
+    { path: 'categories/list', component: CategoryListComponent },
+    { path: 'users/list', component: UserListComponent },
     { path: 'products/:product/categories/list', component: ProductCategoryListComponent},
     { path: 'products/list', component: ProductListComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' }

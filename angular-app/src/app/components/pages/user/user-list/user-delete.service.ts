@@ -13,7 +13,7 @@ export class UserDeleteService {
     constructor(private notifyMessage: NotifyMessageService) { }
 
     set userListComponent(value: UserListComponent) {
-        this._userListComponent;
+        this._userListComponent = value;
     }
 
     showModalDelete(userId: number) {

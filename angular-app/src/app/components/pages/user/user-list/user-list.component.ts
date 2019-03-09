@@ -44,9 +44,9 @@ export class UserListComponent implements OnInit {
         protected userEditService: UserEditService,
         protected userDeleteService: UserDeleteService
     ) {
-        this.userInsertService;
-        this.userEditService;
-        this.userDeleteService;
+        this.userInsertService.userListComponent = this;
+        this.userEditService.userListComponent = this;
+        this.userDeleteService.userListComponent = this;
     }
 
     ngOnInit() {
