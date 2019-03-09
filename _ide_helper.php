@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.6.30 on 2019-03-05 17:16:19.
+ * Generated for Laravel 5.6.30 on 2019-03-09 19:52:27.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1758,7 +1758,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \CrisLacos\User|null 
+         * @return \CrisLacos\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1796,7 +1796,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \CrisLacos\User|false 
+         * @return \CrisLacos\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1865,7 +1865,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \CrisLacos\User|false 
+         * @return \CrisLacos\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -1932,7 +1932,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \CrisLacos\User 
+         * @return \CrisLacos\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -2043,7 +2043,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \CrisLacos\User|null 
+         * @return \CrisLacos\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -2093,7 +2093,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if the current user is authenticated.
          *
-         * @return \CrisLacos\User 
+         * @return \CrisLacos\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 

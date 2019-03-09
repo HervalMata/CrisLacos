@@ -2,6 +2,7 @@
 
 namespace CrisLacos\Http\Controllers\Api;
 
+use CrisLacos\Http\Filters\CategoryFilter;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Models\Category;
@@ -17,7 +18,9 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = $request->has('all') ? Category::all() : Category::paginate(5);
+        $filter = app(CategoryFilter::class);
+        $filterQuery = Category::filtered($filter);
+        $categories = $request->has('all') ? $filterQuery->get() : $filterQuery->paginate();
         return CategoryResource::collection($categories);
     }
 

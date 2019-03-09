@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {SearchParams, SearchParamsBuilder} from "./http-resource";
+import { environment } from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {User} from "../../model";
 import {map} from "rxjs/operators";
@@ -11,7 +12,7 @@ import {AuthService} from "../auth.service";
 })
 export class UserHttpService {
 
-    private baseUrl = '${enviroment.api.url}/users';
+    private baseUrl = `${environment.api.url}/users`;
     private token = this.authService.getToken();
 
     constructor(

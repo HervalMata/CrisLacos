@@ -5,10 +5,11 @@ namespace CrisLacos\Models;
 use CrisLacos\Http\Controllers\Api\ProductController;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Mnabialek\LaravelEloquentFilter\Traits\Filterable;
 
 class Category extends Model
 {
-    use Sluggable;
+    use Sluggable, Filterable;
 
     protected $fillable = ['name', 'active'];
 

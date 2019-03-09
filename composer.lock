@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "710eabcfdfc66cc390e5033790b1a72e",
+    "content-hash": "ca202e1afd3452a81042c11bdb8a5b85",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -925,6 +925,53 @@
                 "storage"
             ],
             "time": "2019-02-01T08:50:36+00:00"
+        },
+        {
+            "name": "mnabialek/laravel-eloquent-filter",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mnabialek/laravel-eloquent-filter.git",
+                "reference": "074b27eb26117eae41d2a4283e8aa8e962413a57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mnabialek/laravel-eloquent-filter/zipball/074b27eb26117eae41d2a4283e8aa8e962413a57",
+                "reference": "074b27eb26117eae41d2a4283e8aa8e962413a57",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "^5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mnabialek\\LaravelEloquentFilter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mnabialek",
+                    "email": "gitre@nabialek.org"
+                }
+            ],
+            "description": "Allows filtering Eloquent queries by input filters",
+            "keywords": [
+                "eloquent",
+                "filter",
+                "input",
+                "laravel",
+                "request"
+            ],
+            "time": "2016-06-15T14:41:00+00:00"
         },
         {
             "name": "monolog/monolog",

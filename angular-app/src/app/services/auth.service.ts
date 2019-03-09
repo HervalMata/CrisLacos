@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {User} from "../model";
 import {JwtHelperService} from '../../../node_modules/@auth0/angular-jwt';
+import { environment } from "../../environments/environment";
 
 const TOKEN_KEY = 'cris_lacos_token';
 
@@ -20,7 +21,7 @@ export class AuthService {
   }
 
   login(user: {email: string, password: string}) : Observable<{token: string}> {
-    return this.http.post<{token: string}>('${enviroment.api.url}/login', user)
+    return this.http.post<{token: string}>(`${environment.api.url}/login`, user)
         .pipe(
             tap(response => {
               this.setToken(response.token)
@@ -30,7 +31,7 @@ export class AuthService {
 
   logout() : Observable<any> {
       return this.http.
-            post<{token: string}>('${enviroment.api.url}/logout', {})
+            post<{token: string}>(`${environment.api.url}/logout`, {})
           .pipe(
               tap(() => {
                   this.setToken(null)

@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {Category} from "../../model";
 import {map} from "rxjs/operators";
 import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import {HttpResource, SearchParams, SearchParamsBuilder} from "./http-resource";
 export class CategoryHttpService implements HttpResource<Category> {
 
   variavel = 'Herval';
-  private baseUrl = '${enviroment.api.url}/categories';
+  private baseUrl = `${environment.api.url}/categories`;
   private token = window.localStorage.getItem('token');
 
   constructor(private http: HttpClient) { }
