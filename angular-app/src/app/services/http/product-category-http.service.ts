@@ -25,7 +25,7 @@ export class ProductCategoryHttpService {
           );
     }
 
-    create(productId: number, categoriesId: number) : Observable<Product> {
+    create(productId: number, categoriesId: number[]) : Observable<Product> {
         return this.http.post<{data: Product}>
         (`http://localhost:8000/api/products/${productId}/categories`, {categories: categoriesId},{
             headers: {
