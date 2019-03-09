@@ -1,13 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {CategoryNewModalComponent} from "../category-new-modal/category-new-modal.component";
 import {CategoryEditModalComponent} from "../category-edit-modal/category-edit-modal.component";
 import {CategoryDeleteModalComponent} from "../category-delete-modal/category-delete-modal.component";
 import {Category} from "../../../../model";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
-import PNotify from 'pnotify/dist/es/PNotify';
-import PNotifyButtons from 'pnotify/dist/es/PNotifyButtons';
 import {NotifyMessageService} from "../../../../services/notify-message.service";
 import {CategoryInsertService} from "./category-insert.service";
 import {CategoryEditService} from "./category-edit.service";
@@ -29,6 +25,8 @@ export class CategoryListComponent implements OnInit {
         totalItems: 0,
         itemsPerPage: 15
     }
+
+    sortColumn = {column: '', sort: ''};
 
     @ViewChild(CategoryNewModalComponent)
     categoryNewModal: CategoryNewModalComponent;
