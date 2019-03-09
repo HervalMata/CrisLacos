@@ -35,8 +35,6 @@ export class LoginComponent implements OnInit {
         //Enviar uma requisição ajax com as credenciais para API
         this.authService.login(this.credentials)
             .subscribe((data) => {
-                const token = data.token;
-                window.localStorage.setItem('token', token);
                 this.router.navigate(['categories/list']);
             }, () => this.showMessageError = true);
 

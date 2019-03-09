@@ -13,7 +13,7 @@ export class CategoryDeleteService {
   constructor(private notifyMessage: NotifyMessageService) { }
 
   set categoryListComponent(value: CategoryListComponent) {
-    this._categoryListComponent;
+    this._categoryListComponent = value;
   }
 
   showModalDelete(categoryId: number) {

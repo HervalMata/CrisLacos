@@ -13,7 +13,7 @@ export class CategoryEditService {
     constructor(private notifyMessage: NotifyMessageService) { }
 
     set categoryListComponent(value: CategoryListComponent) {
-        this._categoryListComponent;
+        this._categoryListComponent = value;
     }
 
     showModalEdit(categoryId: number) {

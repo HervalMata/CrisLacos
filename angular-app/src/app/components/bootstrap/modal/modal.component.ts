@@ -17,9 +17,9 @@ export class ModalComponent implements OnInit {
   ngOnInit() {
     const jqueryElement = this.getJQueryElement();
 
-    jqueryElement.find('modal-title').addClass('modal-title');
-    jqueryElement.find('modal-body').addClass('modal-body');
-    jqueryElement.find('modal-footer').addClass('modal-footer');
+    jqueryElement.find('[modal-title]').addClass('modal-title');
+    jqueryElement.find('[modal-body]').addClass('modal-body');
+    jqueryElement.find('[modal-footer]').addClass('modal-footer');
 
     jqueryElement.on('hidden.bs.modal', (e) => {
       console.log(e);
@@ -32,11 +32,11 @@ export class ModalComponent implements OnInit {
   }
 
   hide() {
-      this.getJQueryElement().modal('hide');
+    this.getJQueryElement().modal('hide');
   }
 
   private getJQueryElement() {
-      const nativeElement = this.element.nativeElement;
-      return $(nativeElement.firstChild);
+    const nativeElement = this.element.nativeElement;
+    return $(nativeElement.firstChild);
   }
 }

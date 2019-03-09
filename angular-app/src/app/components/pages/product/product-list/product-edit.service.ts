@@ -13,7 +13,7 @@ export class ProductEditService {
     constructor(private notifyMessage: NotifyMessageService) { }
 
     set productListComponent(value: ProductListComponent) {
-        this._productListComponent;
+        this._productListComponent = value;
     }
 
     showModalEdit(productId: number) {

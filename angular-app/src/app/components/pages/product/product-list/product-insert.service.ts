@@ -13,7 +13,7 @@ export class ProductInsertService {
     constructor(private notifyMessage: NotifyMessageService) { }
 
     set productListComponent(value: ProductListComponent) {
-        this._productListComponent;
+        this._productListComponent = value;
     }
 
     showModalInsert() {

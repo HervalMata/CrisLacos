@@ -18,7 +18,6 @@ export class ProductEditModalComponent implements OnInit {
         active: true
     };
 
-    @Input()
     _productId: number;
 
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();

@@ -13,7 +13,7 @@ export class ProductDeleteService {
     constructor(private notifyMessage: NotifyMessageService) { }
 
     set productListComponent(value: ProductListComponent) {
-        this._productListComponent;
+        this._productListComponent = value;
     }
 
     showModalDelete(productId: number) {
