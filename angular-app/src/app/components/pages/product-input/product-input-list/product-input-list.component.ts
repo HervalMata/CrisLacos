@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ProductInput} from "../../../../model";
 import {ProductInputHttpService} from "../../../../services/http/product-input-http.service";
 import {ProductInputInsertService} from "./product-input-insert.service";
+import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 
 @Component({
   selector: 'product-input-list',
@@ -19,6 +20,8 @@ export class ProductInputListComponent implements OnInit {
   }
 
   sortColumn = {column: 'created_at', sort: 'desc'};
+
+    @ViewChild(ModalComponent) modal: ModalComponent;
 
   @ViewChild(ProductInputListComponent) inputNewModal: ProductInputListComponent;
 
@@ -62,4 +65,8 @@ export class ProductInputListComponent implements OnInit {
     this.searchText = search;
     this.getInputs();
   }
+
+    showModal() {
+        this.modal.show();
+    }
 }

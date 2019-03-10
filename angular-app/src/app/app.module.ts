@@ -33,7 +33,7 @@ import { SortColumnComponent } from './components/common/sort-column/sort-column
 import { CategorySearchFormComponent } from './components/pages/category/category-search-form/category-search-form.component';
 import { CategoryFormComponent } from './components/pages/category/category-form/category-form.component';
 import { FieldErrorComponent } from './components/bootstrap/field-error/field-error.component';
-import { IsInvalidDirective } from './directives/is-invalid.directive';
+import {IsInvalidControlDirective, IsInvalidDirective} from './directives/is-invalid.directive';
 import { CardErrorComponent } from './components/bootstrap/card-error/card-error.component';
 import { ListErrorComponent } from './components/bootstrap/list-error/list-error.component';
 import { ProductInputNewModalComponent } from './components/pages/product-input/product-input-new-modal/product-input-new-modal.component';
@@ -82,6 +82,7 @@ function jwtFactory(authService: AuthService) {
     CategoryFormComponent,
     FieldErrorComponent,
     IsInvalidDirective,
+    IsInvalidControlDirective,
     CardErrorComponent,
     ListErrorComponent,
     ProductInputListComponent,
