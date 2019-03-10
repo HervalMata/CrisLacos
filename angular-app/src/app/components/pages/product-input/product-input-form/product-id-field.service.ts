@@ -54,6 +54,7 @@ export class ProductIdFieldService {
 
     this.data = [];
     this.onClosingDropdown();
+    this.resetSelect2OnSetNull();
   }
 
     private onClosingDropdown() {
@@ -66,5 +67,14 @@ export class ProductIdFieldService {
 
     updateFormControl(value) {
       this.formControl.setValue(value);
+    }
+
+    private resetSelect2OnSetNull() {
+        this.formControl.valueChanges.subscribe((value => {
+          if (!value) {
+            const selecttField = $(this.select2Native).find('select');
+            selecttField.val(null).trigger('change');
+          }
+        }));
     }
 }
