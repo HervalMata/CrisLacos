@@ -40,6 +40,7 @@ import { ProductInputNewModalComponent } from './components/pages/product-input/
 import { ProductInputSearchFormComponent } from './components/pages/product-input/product-input-search-form/product-input-search-form.component';
 import {ProductInputListComponent} from "./components/pages/product-input/product-input-list/product-input-list.component";
 import { ProductSearchFormComponent } from './components/pages/product/product-search-form/product-search-form.component';
+import {Select2Module} from "ng2-select2";
 
 function jwtFactory(authService: AuthService) {
     return {
@@ -93,6 +94,7 @@ function jwtFactory(authService: AuthService) {
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    Select2Module,
     AppRoutingModule,
     JwtModule.forRoot({
         jwtOptionsProvider: {
