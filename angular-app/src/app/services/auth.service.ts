@@ -59,4 +59,8 @@ export class AuthService {
       const token = this.getToken();
       return !new JwtHelperService().isTokenExpired(token, 30);
   }
+
+  get authorizationHeader() {
+      return `Bearer ${this.getToken()}`;
+  }
 }
