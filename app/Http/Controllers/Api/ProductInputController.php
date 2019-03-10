@@ -2,6 +2,7 @@
 
 namespace CrisLacos\Http\Controllers\Api;
 
+use CrisLacos\Http\Filters\ProductInputFilter;
 use CrisLacos\Http\Resources\ProductInputResource;
 use CrisLacos\Models\ProductInput;
 use Illuminate\Http\Request;
@@ -17,7 +18,9 @@ class ProductInputController extends Controller
      */
     public function index()
     {
-        $inputs = ProductInput::with('product')->paginate(5);
+        $filter = app(ProductInputFilter::class);
+        $filterQuery = ProductInput::with('prroduct')->filtered($filter);
+        $inputs = $filterQuery->paginate();
         return ProductInputResource::collection($inputs);
     }
 
