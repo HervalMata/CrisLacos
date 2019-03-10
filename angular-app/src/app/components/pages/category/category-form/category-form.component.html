@@ -1,9 +1,11 @@
 <div class="form-group" [formGroup]="form">
-  <label for="name">Nome</label>
+  <label [for]="fieldsOptions.name.id">{{fieldsOptions.name}}</label>
   <input type="text" class="form-control" isInvalid
-         id="name" name="name" required maxlength="255"
+         [id]="fieldsOptions.name.id" required [maxlength]="fieldsOptions.name.validationMessage.maxlength"
         formControlName="name">
-  <field-error [field]="form.get('name')"></field-error>
+  <field-error [field]="form.get('name')"
+               [label]="fieldsOptions.name.label"
+               [messages]="fieldsOptions.name.validationMessage"></field-error>
 </div>
 <div class="form-group form-check" [formGroup]="form">
   <label for="active">Ativa?</label>
