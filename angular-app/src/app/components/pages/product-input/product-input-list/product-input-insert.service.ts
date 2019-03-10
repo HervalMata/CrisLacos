@@ -26,7 +26,7 @@ export class ProductInputInsertService {
     this._inputListComponent.getInputs();
   }
 
-  onInsertErrors($event: HttpErrorResponse) {
+  onInsertError($event: HttpErrorResponse) {
     console.log($event);
     this.notifyMessage.error('Erro ao cadastrar entrada de produto!.')
   }

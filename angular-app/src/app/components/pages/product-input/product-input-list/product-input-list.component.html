@@ -4,7 +4,7 @@
     <thead>
       <tr>
         <td>
-          <button class="btn btn-success" (click)="inputInsertService.showModalInsert()">Nova Entrada</button>
+          <button class="btn btn-success" (click)="productInputInsertService.showModalInsert()">Nova Entrada</button>
         </td>
         <td colspan="5">
           <product-input-search-form (OnSearch)="search($event)"></product-input-search-form>
@@ -32,4 +32,4 @@
           nextLabel="Próxima"
   ></pagination-controls>
 </div>
-<!--<product-input-new-modal (onSuccess)="inputInsertService.onInsertSuccess($event)" (onError)="categoryInsertService.onInsertError($event)"></product-input-new-modal>-->
+<product-input-new-modal (onSuccess)="productInputInsertService.onInsertSuccess($event)" (onError)="productInputInsertService.onInsertError($event)"></product-input-new-modal>

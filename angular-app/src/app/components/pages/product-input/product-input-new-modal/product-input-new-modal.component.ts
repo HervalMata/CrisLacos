@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CategoryHttpService} from "../../../../services/http/category-http.service";
+import {ProductInputHttpService} from "../../../../services/http/product-input-http.service";
 
 @Component({
   selector: 'product-input-new-modal',
@@ -20,12 +21,11 @@ export class ProductInputNewModalComponent implements OnInit {
   @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<any>();
 
   constructor(
-      public categoryHttp: CategoryHttpService,
+      public productInputHttp: ProductInputHttpService,
       private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-        name: [''],
-        active: true
+        amount: [''],
     });
   }
 
@@ -33,7 +33,7 @@ export class ProductInputNewModalComponent implements OnInit {
   }
 
   submit() {
-    this.categoryHttp.create(this.form.value)
+    this.productInputHttp.create(this.form.value)
         .subscribe((category) => {
           this.form.reset({
               name: '',
