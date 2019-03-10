@@ -14,12 +14,29 @@ use Mnabialek\LaravelEloquentFilter\Filters\SimpleQueryFilter;
 class ProductInputFilter extends SimpleQueryFilter
 {
     protected $simpleFilters = ['search'];
-    protected $simpleSorts = ['id', 'products.name', 'created_at'];
+    protected $simpleSorts = ['id', 'product.name', 'created_at'];
 
     /**
      * @param $value
      */
-    protected function applySearch($query)
+    protected function applySearch($value)
+    {
+        $this->query->where('name', 'LIKE', "$value%");
+    }
+
+    /**
+     * @param $order
+     */
+    protected function applySortCreatedAt($order)
+    {
+        $this->query->orderBy('product_inputs.created_at', '$order');
+    }
+
+    /**
+     * @param $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function apply($query)
     {
         $this->query->select('product_inputs.*')
                     ->join('products', 'products.id', '=', 'product_inputs.product_id');
