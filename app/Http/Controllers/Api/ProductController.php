@@ -2,6 +2,7 @@
 
 namespace CrisLacos\Http\Controllers\Api;
 
+use CrisLacos\Http\Filters\ProductFilter;
 use CrisLacos\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
@@ -20,9 +21,11 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        $filter = app(ProductFilter::class);
         $query = Product::query();
         $query = $this->onlyTrashedIfRequested($request, $query);
-        $products = $query->paginate(10);
+        $filterQuery = $query->filtered($filter);
+        $products = $filter->hasFilterParameter() ? $filterQuery->get() : $filterQuery->paginate(10);
         return ProductResource::collection($products);
     }
 
