@@ -31,3 +31,12 @@ export interface User {
     readonly created_at?: {date: string};
     readonly updated_at?: {date: string};
 }
+
+export interface ProductInput {
+    id?: number;
+    amount: string;
+    description: string;
+    readonly created_at?: {date: string};
+    readonly updated_at?: {date: string};
+    product: Product;
+}
