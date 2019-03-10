@@ -33,6 +33,11 @@
     </tr>
     </tbody>
   </table>
+  <pagination-controls
+          (pageChange)="pageChanged($event)"
+          previousLabel="Anterior"
+          nextLabel="Próximo"
+  ></pagination-controls>
 </div>
 <user-new-modal (onSuccess)="userInsertService.onInsertSuccess($event)" (onError)="userInsertService.onInsertError($event)"></user-new-modal>
 <user-edit-modal (userId)="userId" (onSuccess)="userEditService.onEditSuccess($event)" (onError)="userEditService.onEditError($event)"></user-edit-modal>

@@ -33,11 +33,11 @@ export class CategoryNewModalComponent implements OnInit {
   }
 
   submit(){
-      /*this.categoryHttp.create(this.category)
+      this.categoryHttp.create(this.form.value)
       .subscribe((category) => {
         this.onSuccess.emit(category);
         this.modal.hide();
-      }, error => this.onError.emit(error));*/
+      }, error => this.onError.emit(error));
   }
 
 

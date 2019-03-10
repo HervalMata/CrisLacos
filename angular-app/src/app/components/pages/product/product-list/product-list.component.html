@@ -36,6 +36,11 @@
     </tr>
     </tbody>
   </table>
+  <pagination-controls
+          (pageChange)="pageChanged($event)"
+          previousLabel="Anterior"
+          nextLabel="Próximo"
+  ></pagination-controls>
 </div>
 <product-view-modal (onError)="productViewService.onViewError($event)"></product-view-modal>
 <product-new-modal (onSuccess)="productInsertService.onInsertSuccess($event)" (onError)="productInsertService.onInsertError($event)"></product-new-modal>
