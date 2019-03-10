@@ -18,7 +18,7 @@ export class CategoryNewModalComponent implements OnInit {
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     form: FormGroup;
-
+    errors = {};
 
   constructor(
       private categoryHttp: CategoryHttpService,
@@ -26,7 +26,7 @@ export class CategoryNewModalComponent implements OnInit {
       ) {
       const maxlength = fieldsOptions.name.validationMessage.maxlength;
       this.form = this.formBuilder.group({
-          name: ['', [Validators.required, Validators.maxLength(maxlength)]],
+          name: [''],
           active: true
       })
   }
@@ -39,7 +39,12 @@ export class CategoryNewModalComponent implements OnInit {
       .subscribe((category) => {
         this.onSuccess.emit(category);
         this.modal.hide();
-      }, error => this.onError.emit(error));
+      }, responseError => {
+          if (responseError.status === 422) {
+              this.errors = responseError.error.errors;
+          }
+          this.onError.emit(responseError);
+      });
   }
 
 
@@ -51,4 +56,7 @@ export class CategoryNewModalComponent implements OnInit {
         console.log($event);
     }
 
+    showErrors() {
+      return Object.keys(this.errors).length != 0;
+    }
 }
