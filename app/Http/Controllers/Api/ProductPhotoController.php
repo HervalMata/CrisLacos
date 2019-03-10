@@ -6,6 +6,7 @@ use CrisLacos\Http\Resources\ProductPhotoCollection;
 use CrisLacos\Http\Resources\ProductPhotoResource;
 use CrisLacos\Models\Product;
 use CrisLacos\Models\ProductPhoto;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 
@@ -30,7 +31,8 @@ class ProductPhotoController extends Controller
      */
     public function store(Request $request, Product $product)
     {
-        ProductPhoto::createWithPhotosFiles($product->id, $request->photos);
+        $photos = ProductPhoto::createWithPhotosFiles($product->id, $request->photos);
+        return \response()->json(new ProductPhotoCollection($photos, $product), 201);
     }
 
     /**

@@ -39,7 +39,7 @@ export class ProductPhotoUploadComponent implements OnInit {
                 if (responseError.status === 422) {
                     this.errors = responseError.error.errors;
                 }
-                this.onError.emit(responseError)
+                this.onError.emit(responseError);
             });
     }
 
