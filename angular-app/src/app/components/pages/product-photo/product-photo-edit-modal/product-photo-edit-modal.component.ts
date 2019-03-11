@@ -13,6 +13,8 @@ export class ProductPhotoEditModalComponent implements OnInit {
 
   errors = {};
   productId: number;
+  @Input()
+  photoId: number;
 
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
@@ -36,7 +38,7 @@ export class ProductPhotoEditModalComponent implements OnInit {
             return;
         }
 
-        this.productPhotoHttp.create(this.productId, files)
+        this.productPhotoHttp.update(this.productId, this.photoId, files[0])
             .subscribe((data) => this.onSuccess.emit(data),
                 responseError => {
             if (responseError.status === 422) {
@@ -54,8 +56,8 @@ export class ProductPhotoEditModalComponent implements OnInit {
         this.modal.show();
     }
 
-    hideModal($event: Event) {
-        console.log($event);
+    hideModal() {
+        this.modal.hide();
     }
 
 }
