@@ -1,7 +1,7 @@
 <div class="form-group" [formGroup]="form">
   <label [for]="fieldsOptions.name.id">{{fieldsOptions.name}}</label>
   <input type="text" class="form-control" isInvalid
-         [id]="fieldsOptions.name.id"
+         [id]="fieldsOptions.name.id" required
         formControlName="name">
   <field-error [field]="form.get('name')"
                [label]="fieldsOptions.name.label"
