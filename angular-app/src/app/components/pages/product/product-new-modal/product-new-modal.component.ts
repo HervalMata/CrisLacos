@@ -16,13 +16,6 @@ export class ProductNewModalComponent implements OnInit {
     form: FormGroup;
     errors = {};
 
-    product: Product = {
-        name: '',
-        description: '',
-        price: 0,
-        active: true
-    };
-
     @ViewChild(ModalComponent)
     modal: ModalComponent;
 
@@ -34,9 +27,10 @@ export class ProductNewModalComponent implements OnInit {
         private formBuilder: FormBuilder
     ) {
         this.form = this.formBuilder.group({
-            name: ['null', [Validators.required]],
-            description: ['null', [Validators.required]],
+            name: ['', [Validators.required]],
+            description: ['', [Validators.required]],
             price: ['', [Validators.required, Validators.min(fieldsOptions.price.validationMessage.min)]],
+            active: true
         });
     }
 
@@ -44,11 +38,22 @@ export class ProductNewModalComponent implements OnInit {
     }
 
     submit(){
-        this.productHttp.create(this.product)
-            .subscribe((product) => {
-                this.onSuccess.emit(product);
+        this.productHttp.create(this.form.value)
+            .subscribe((input) => {
+                this.form.reset({
+                    name: '',
+                    description: '',
+                    price: '',
+                    active: true
+                });
+                this.onSuccess.emit(input);
                 this.modal.hide();
-            }, error => this.onError.emit(error));
+            }, responseError => {
+                if (responseError.status === 422) {
+                    this.errors = responseError.error.errors;
+                }
+                this.onError.emit(responseError)
+            });
     }
 
     showErrors() {
