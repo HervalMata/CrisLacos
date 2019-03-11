@@ -4,6 +4,7 @@ import {ProductPhotoHttpService} from "../../../../services/http/product-photo-h
 import {ActivatedRoute} from "@angular/router";
 import {NotifyMessageService} from "../../../../services/notify-message.service";
 import {ProductPhotoEditModalComponent} from "../product-photo-edit-modal/product-photo-edit-modal.component";
+import {ProductPhotoDeleteModalComponent} from "../product-photo-delete-modal/product-photo-delete-modal.component";
 
 declare const $;
 
@@ -22,6 +23,9 @@ export class ProductPhotoManagerComponent implements OnInit {
 
   @ViewChild(ProductPhotoEditModalComponent)
   editModal: ProductPhotoEditModalComponent;
+
+  @ViewChild(ProductPhotoDeleteModalComponent)
+  deleteModal: ProductPhotoDeleteModalComponent;
 
   constructor(
       private productPhotoHttp: ProductPhotoHttpService,
@@ -51,12 +55,20 @@ export class ProductPhotoManagerComponent implements OnInit {
             <i class="fas fa-edit"></i>
          </a>
         `;
-        $.fancybox.defaults.buttons = ['download', 'edit', 'zoom', 'slideShow', 'thumbs', 'close'];
+        $.fancybox.defaults.buttons = ['download',
+            'edit',
+            // 'zoom', 'slideShow', 'thumbs',
+            'delete', 'close'];
         $('body').on('click', '[data-fancybox-edit]', (e) => {
             const photoId = this.getPhotoIdFromSlideShow();
             this.photoIdToEdit = photoId;
             this.editModal.showModal();
-        })
+        });
+        $('body').on('click', '[data-fancybox-delete]', (e) => {
+            const photoId = this.getPhotoIdFromSlideShow();
+            this.photoIdToEdit = photoId;
+            this.deleteModal.showModal();
+        });
     }
 
    onInsertSuccess(data: {photos: ProductPhoto[]}) {
@@ -81,5 +93,17 @@ export class ProductPhotoManagerComponent implements OnInit {
 
       this.photos[index] = data;
       this.notifyMessage.success('Foto substituida com sucesso!.');
+    }
+
+    onDeleteSuccess(data: ProductPhoto) {
+        $.fancybox.getInstance().close();
+        this.deleteModal.hideModal();
+
+        const index = this.photos.findIndex((photo: ProductPhoto) => {
+            return photo.id == this.photoIdToEdit;
+        });
+
+        this.photos[index] = data;
+        this.notifyMessage.success('Foto excluida com sucesso!.');
     }
 }
