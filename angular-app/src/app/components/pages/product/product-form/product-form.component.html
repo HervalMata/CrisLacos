@@ -9,7 +9,7 @@
   </div>
   <div class="form-group">
     <label [for]="fieldsOptions.description.id">{{fieldsOptions.description.label}}</label>
-    <textarea class="form-control" [id]="fieldsOptions.description.id" isInvalid formControlName="description" required [cols]="fieldsOptions.description.cols" [rows]="fieldsOptions.description.rows"></textarea>
+    <textarea class="form-control" [id]="fieldsOptions.description.id" isInvalid formControlName="description" required [cols]="fieldsOptions.description.validationMessage.cols" [rows]="fieldsOptions.description.validationMessage.rows"></textarea>
     <field-error [field]="form.get('description')"
                  [label]="fieldsOptions.description.label"
                  [messages]="fieldsOptions.description.validationMessage">

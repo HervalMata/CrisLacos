@@ -3,6 +3,8 @@ import {Product} from "../../../../model";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ModalComponent} from "../../../bootstrap/modal/modal.component";
 import {ProductHttpService} from "../../../../services/http/product-http.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import fieldsOptions from "../product-form/product-fields-options";
 
 @Component({
   selector: 'product-edit-modal',
@@ -11,13 +13,10 @@ import {ProductHttpService} from "../../../../services/http/product-http.service
 })
 export class ProductEditModalComponent implements OnInit {
 
-    product: Product = {
-        name: '',
-        description: '',
-        price: 0,
-        active: true
-    };
+    form: FormGroup;
+    errors = {};
 
+    @Input()
     _productId: number;
 
     @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
@@ -27,8 +26,16 @@ export class ProductEditModalComponent implements OnInit {
     modal: ModalComponent;
 
     constructor(
-        private productHttp: ProductHttpService
-    ) { }
+        private productHttp: ProductHttpService,
+        private formBuilder: FormBuilder
+    ) {
+        this.form = this.formBuilder.group({
+            name: ['', [Validators.required]],
+            description: ['', [Validators.required]],
+            price: ['', [Validators.required, Validators.min(fieldsOptions.price.validationMessage.min)]],
+            active: true
+        });
+    }
 
     ngOnInit() {
     }
@@ -39,19 +46,25 @@ export class ProductEditModalComponent implements OnInit {
         this._productId = value;
         if (this._productId) {
             this.productHttp.get(this._productId).
-            subscribe(product => this.product = product);
+            subscribe(product => {
+                this.onSuccess.emit(product);
+                this.modal.hide();
+            });
         }
 
     }
 
     submit(){
-        this.productHttp.update(this._productId, this.product)
+        this.productHttp.update(this._productId, this.form.value)
             .subscribe((product) => {
                 this.onSuccess.emit(product);
                 this.modal.hide();
             }, error => this.onError.emit(error));
     }
 
+    showErrors() {
+        return Object.keys(this.errors).length != 0;
+    }
 
     showModal() {
         this.modal.show();
