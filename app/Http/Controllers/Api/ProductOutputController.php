@@ -17,8 +17,10 @@ class ProductOutputController extends Controller
      */
     public function index()
     {
-        $ouputs = ProductOutputt::with('product')->paginate();
-        return ProductOutputResource::collection($ouputs);
+        $filter = app(ProductOutputFilter::class);
+        $filterQuery = ProductOutput::with('product')->filtered($filter);
+        $outputs = $filterQuery->paginate();
+        return ProductOutputResource::collection($outputs);
     }
 
     /**

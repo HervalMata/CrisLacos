@@ -41,6 +41,15 @@ export interface ProductInput {
     product: Product;
 }
 
+export interface ProductOutput {
+    id?: number;
+    amount: string;
+    description: string;
+    readonly created_at?: {date: string};
+    readonly updated_at?: {date: string};
+    product: Product;
+}
+
 export interface ProductPhoto {
     id?: number;
     photo_url: string;
