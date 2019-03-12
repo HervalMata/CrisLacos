@@ -28,6 +28,8 @@ export class LoginPhoneNumberPage {
     this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
       console.log(user);
     });
+
+    this.firebaseAuth.
     this.firebaseAuth.makePhoneNumberForm("#firebase-ui");
   }
 
