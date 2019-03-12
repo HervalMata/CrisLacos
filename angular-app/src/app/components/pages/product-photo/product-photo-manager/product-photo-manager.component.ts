@@ -69,6 +69,9 @@ export class ProductPhotoManagerComponent implements OnInit {
             this.photoIdToEdit = photoId;
             this.deleteModal.showModal();
         });
+
+        $.fancybox.defaults.animationEffect = "circular";
+        $.fancybox.defaults.transitionEffect = "circular";
     }
 
    onInsertSuccess(data: {photos: ProductPhoto[]}) {

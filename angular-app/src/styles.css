@@ -24,3 +24,7 @@
 .is-invalid .select2-selection {
     border-color: #dc3545  !important;
 }
+
+.alignCenter{
+    text-align: center;
+}

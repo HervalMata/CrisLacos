@@ -21,10 +21,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $filter = app(UserFilter::class);
         $query = User::query();
         $query = $this->onlyTrashedIfRequested($request, $query);
-        //$users = $query->paginate();
-        $users = $request->has('all') ? $query->all() : $query->paginate();
+        $filterQuery = $query->filtered($filter);
+        $users = $filter->hasFilterParameter() ? $filterQuery->get() : $filterQuery->paginate();
         return UserResource::collection($users);
     }
 

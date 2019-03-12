@@ -26,6 +26,8 @@ export class UserListComponent implements OnInit {
         itemsPerPage: 15
     }
 
+    sortColumn = {column: 'id', sort: 'asc'};
+
     @ViewChild(UserNewModalComponent)
     userNewModal: UserNewModalComponent;
 
@@ -49,12 +51,21 @@ export class UserListComponent implements OnInit {
         this.userDeleteService.userListComponent = this;
     }
 
+    searchText: string;
+
     ngOnInit() {
+        console.log('ngOnInit');
         this.getUsers();
     }
 
     getUsers() {
-        this.userHttp.list({page: this.pagination.page}).
+        this.userHttp.list({
+                page: this.pagination.page,
+                sort: this.sortColumn.column === '' ? null : this.sortColumn,
+                search: this.searchText
+            },
+
+            ).
         subscribe((response) => {
             this.users = response.data;
             this.pagination.totalItems = response.meta.total;
@@ -64,6 +75,16 @@ export class UserListComponent implements OnInit {
 
     pageChanged(page) {
         this.pagination.page = page;
+        this.getUsers();
+    }
+
+    sort(sortColumn) {
+        this.getUsers();
+    }
+
+    search(search) {
+        console.log(search);
+        this.searchText = search;
         this.getUsers();
     }
 
