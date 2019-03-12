@@ -47,4 +47,8 @@ export class FirebaseAuthProvider {
           });
         }));
     }
+
+    getFirebase() {
+      return firebase;
+    }
 }
