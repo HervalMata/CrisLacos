@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseAuthProvider } from "../../providers/firebase-auth/firebase-auth";
 import {AuthProvider} from "../../providers/auth/auth";
+import {MainPage} from "../main/main";
 
 
 /**
@@ -27,13 +28,30 @@ export class LoginPhoneNumberPage {
   }
 
   ionViewDidLoad() {
-    // this.firebaseAuth.getUser()
-        // .then((user) => {
-          // console.log(user);
-        // });
-    this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
+    // @ts-ignore
+      const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+          this.authService
+              .login()
+              .subscribe((token) => {
+                  this.redirectToMainPage();
+                  console.log('redirecionar para o main');
+              }, (responseError) => {
+                this.redirectToCustumerCreatePage();
+                  console.log('redirecionar para a criação da conta do cliente');
+              });
+          unsubscribed();
+      }
+    })
     this.firebaseAuth.makePhoneNumberForm("#firebase-ui");
-    this.authService.login().subscribe((token) => console.log(token));
+
   }
 
+    redirectToMainPage() {
+        this.navCtrl.setRoot(MainPage);
+    }
+
+    redirectToCustumerCreatePage() {
+
+    }
 }
