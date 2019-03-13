@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
                 $user->profile->save();
             });
         factory(User::class, 50)->create([
+            'email' => 'clente@user.com',
             'role' => User::ROLE_CUSTOMER
         ]);
     }
