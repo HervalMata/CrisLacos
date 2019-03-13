@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseAuthProvider } from "../../providers/firebase-auth/firebase-auth";
+import {AuthProvider} from "../../providers/auth/auth";
 
 
 /**
@@ -20,7 +21,8 @@ export class LoginPhoneNumberPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private firebaseAuth: FirebaseAuthProvider
+      private firebaseAuth: FirebaseAuthProvider,
+      private authService: AuthProvider
       ) {
   }
 
@@ -31,6 +33,7 @@ export class LoginPhoneNumberPage {
         // });
     this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
     this.firebaseAuth.makePhoneNumberForm("#firebase-ui");
+    this.authService.login().subscribe((token) => console.log(token));
   }
 
 }
