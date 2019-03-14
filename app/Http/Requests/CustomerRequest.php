@@ -28,7 +28,7 @@ class CustomerRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'email' => 'required|max:255|email|unique:users,email',
-            'name' => 'required|min:4|max:16',
+            'password' => 'required|min:4|max:16',
             'photo' => 'image|max:' . (3 * 1024),
             'token' => [
                 'required',
