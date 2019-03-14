@@ -107,4 +107,13 @@ class UserProfile extends Model
             \File::delete($filePath);
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getPhotoUrlAttribute()
+    {
+        $path = self::photoDir();
+        return $this->photo ? asset("storage/{$path}/{$this->$photo}") : 'https://gravatar.com/avatar/nouser.jpg';
+    }
 }
