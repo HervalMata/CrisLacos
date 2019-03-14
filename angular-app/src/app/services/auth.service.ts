@@ -52,7 +52,12 @@ export class AuthService {
   private setUserFromToken(token: string) {
      const decodeToken = new JwtHelperService().decodeToken(token);
      // @ts-ignore
-      this.me = decodeToken ? {id: decodeToken.sub, name: decodeToken.name, email: decodeToken.email} : null;
+      this.me = decodeToken ? {
+          id: decodeToken.sub,
+          name: decodeToken.name,
+          email: decodeToken.email,
+          profile: decodeToken.profile
+      } : null;
   }
 
   isAuth() : boolean {
