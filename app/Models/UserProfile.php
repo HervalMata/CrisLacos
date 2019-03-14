@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace CrisLacos\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ class UserProfile extends Model
         'phone_number', 'photo'
     ];
 
-    public static function photoPath()
+    public static function photosPath()
     {
         $path = self::USER_PHOTO_PATH;
         return storage_path($path);
@@ -38,8 +39,35 @@ class UserProfile extends Model
         $photo->store($dir, ['disk' => 'public']);
     }
 
+    private static function getPhotoHasName(UploadedFile $photo = null)
+    {
+        return $photo ? $photo->hashName() : null;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public static function saveProfile(User $user, array $data) : UserProfile
+    {
+        $data['photo'] = UserProfile::getPhotoHasName($data['photo']);
+        $user->profile()->fill($data)->save();
+
+        return $user->profile;
+    }
+
+    public static function deleteFile(UploadedFile $photo = null)
+    {
+        if (!$photo) {
+            return;
+        }
+
+        $dir = self::photosPath();
+        $filePath = "{$path}/{$photo->hashName()}";
+
+        if (file_exists($filePath)) {
+            \File::delete($filePath);
+        }
     }
 }
