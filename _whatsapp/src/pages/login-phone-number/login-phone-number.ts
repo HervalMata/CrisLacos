@@ -34,6 +34,7 @@ export class LoginPhoneNumberPage {
           this.authService
               .login()
               .subscribe((token) => {
+                  console.log(token);
                   this.redirectToMainPage();
                   console.log('redirecionar para o main');
               }, (responseError) => {
@@ -42,7 +43,8 @@ export class LoginPhoneNumberPage {
               });
           unsubscribed();
       }
-    })
+    });
+    this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
     this.firebaseAuth.makePhoneNumberForm("#firebase-ui");
 
   }

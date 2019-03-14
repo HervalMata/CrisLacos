@@ -75,7 +75,7 @@ class User extends Authenticatable implements JWTSubject
             UserProfile::uploaPhoto($data['photo']);
             \DB::beginTransaction();
 
-            $user = self::createCustomer($data);
+            $user = self::createCustomeUser($data);
             UserProfile::saveProfile($user, $data);
             \DB::commit();
         } catch (\Exception $e) {
