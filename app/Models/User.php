@@ -36,6 +36,10 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
+    /**
+     * @param array $attributes
+     * @return Authenticatable
+     */
     public function fill(array $attributes)
     {
         !isset($attributes['password']) ? : $attributes['password'] = bcrypt($attributes['password']);
@@ -64,11 +68,19 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function profile()
     {
         return $this->hasOne(UserProfile::class)->withDefault();
     }
 
+    /**
+     * @param array $data
+     * @return User
+     * @throws \Exception
+     */
     public static function createCustomer(array $data) : User
     {
         try {
@@ -85,6 +97,10 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    /**
+     * @param $data
+     * @return User
+     */
     public static function createCustomeUser($data) : User
     {
         $data['password'] = bcrypt(str_random(16));
@@ -93,5 +109,28 @@ class User extends Authenticatable implements JWTSubject
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param array $data
+     * @return User
+     * @throws \Exception
+     */
+    public function updateWhitProfile(array $data) : User
+    {
+        try {
+            UserProfile::uploaPhoto($data['photo']);
+            \DB::beginTransaction();
+            $this->fill($data);
+            $this->save();
+            UserProfile::saveProfile($this, $data);
+            \DB::commit();
+        } catch (\Exception $e) {
+            UserProfile::deleteFile($data['photo']);
+            \DB::rollBack();
+            throw $e;
+        }
+
+        return $this;
     }
 }
