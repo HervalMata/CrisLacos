@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 namespace CrisLacos\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -66,5 +67,18 @@ class User extends Authenticatable implements JWTSubject
     public function profile()
     {
         return $this->hasOne(UserProfile::class)->withDefault();
+    }
+
+    public static function createCustomer(array $data) : User
+    {
+        try {
+            UserProfile::uploaPhoto($photo['photo']);
+            \DB::beginTransaction();
+
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            throw $e;
+        }
     }
 }
