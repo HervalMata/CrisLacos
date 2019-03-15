@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from "../../bootstrap/modal/modal.component";
 import { FirebaseAuthService } from '../../../services/firebase-auth-service';
 
@@ -9,23 +9,35 @@ import { FirebaseAuthService } from '../../../services/firebase-auth-service';
 })
 export class PhoneNumberAuthModalComponent implements OnInit {
 
+    unsubscribed;
+
     @ViewChild(ModalComponent)
     modal: ModalComponent;
+
+    @Output() onSuccess: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private fiebaseAuth: FirebaseAuthService) { }
 
   ngOnInit() {
-    // @ts-ignore
-      const unsubscribed = this.fiebaseAuth.firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        unsubscribed();
-      }
-    });
     this.fiebaseAuth.makePhoneNumberForm('#firebase-ui');
   }
 
   showModal() {
+    this.onAuthStateChanged();
     this.modal.show();
   }
 
+  onAuthStateChanged() {
+     // @ts-ignore
+      this.unsubscribed = this.fiebaseAuth.firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+             this.modal.hide();
+             this.onSuccess.emit(user);
+         }
+     })
+  }
+
+  onHideModal() {
+      this.unsubscribed();
+  }
 }
