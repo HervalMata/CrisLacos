@@ -6,14 +6,8 @@ import firebaseConfig from '../../app/firebase-config';
 declare const firebaseui;
 (<any>window).firebase = firebase;
 
-/*
-  Generated class for the FirebaseAuthProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
-export class FirebaseAuthProvider {
+export class FirebaseAuthService {
 
   constructor() {
     firebase.initializeApp(firebaseConfig);
