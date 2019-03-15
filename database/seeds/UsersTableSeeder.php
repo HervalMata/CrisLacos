@@ -42,7 +42,6 @@ class UsersTableSeeder extends Seeder
                 Model::unguard();
             });
         factory(User::class, 50)->create([
-            'email' => 'clente@user.com',
             'role' => User::ROLE_CUSTOMER
         ]);
     }
@@ -50,8 +49,8 @@ class UsersTableSeeder extends Seeder
     public function getAdminPhoto()
     {
         return new UploadedFile(
-            storage_path('app/faker/users/1624_mod.jpg'),
-            str_random(16) . '.jpg'
+            storage_path('app/faker/users/1624_mod.png'),
+            str_random(16) . '.png'
         );
     }
 }

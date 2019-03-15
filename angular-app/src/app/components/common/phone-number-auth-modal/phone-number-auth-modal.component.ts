@@ -23,7 +23,10 @@ export class PhoneNumberAuthModalComponent implements OnInit {
   }
 
   showModal() {
-    this.onAuthStateChanged();
+    this.fiebaseAuth.makePhoneNumberForm('#firebase-ui');
+    this.fiebaseAuth.logout().then(() => {
+        this.onAuthStateChanged();
+    });
     this.modal.show();
   }
 

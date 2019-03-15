@@ -9,6 +9,8 @@ declare const firebaseui;
 @Injectable()
 export class FirebaseAuthService {
 
+    private ui;
+
   constructor() {
     firebase.initializeApp(firebaseConfig);
   }
@@ -27,6 +29,21 @@ export class FirebaseAuthService {
     }
     const ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start(selectorElement, uiConfig);
+    this.makeFormFirebaseUI(selectorElement, uiConfig);
+  }
+
+  private makeFormFirebaseUI(selectorElement, uiConfig) {
+      if (!this.ui) {
+          // @ts-ignore
+          this.ui = new firebase.auth.AuthUI(firebase.auth());
+          this.ui.start(selectorElement, uiConfig);
+      } else {
+          this.ui.delete().then(() => {
+              // @ts-ignore
+              this.ui = new firebase.auth.AuthUI(firebase.auth());
+              this.ui.start(selectorElement, uiConfig);
+          })
+      }
   }
 
     private async getFirebaseUI() : Promise<any> {
@@ -86,5 +103,10 @@ export class FirebaseAuthService {
       } catch (e) {
           return Promise.reject(e);
       }
+    }
+
+    logout() : Promise<any> {
+      // @ts-ignore
+        return this.firebase.auth().signOut();
     }
 }
