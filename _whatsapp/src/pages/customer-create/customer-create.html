@@ -21,11 +21,18 @@
       <ion-label stacked>E-mail</ion-label>
       <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
-    <ion-item>
       <ion-input type="file" [hidden]="true" #inputFilePhoto (change)="onChoosePhoto($event.target.files)"></ion-input>
-      <button ion-button color="dark-green" (click)="selectPhoto()">Escolher foto para o perfil</button>
-    </ion-item>
+      <button type="button" ion-button color="dark-green" (click)="selectPhoto()">Escolher foto para o perfil</button>
   </ion-list>
+      <ion-card *ngIf="photoPreview">
+        <ion-item>
+          <ion-avatar>
+            <img [src]="photoPreview">
+          </ion-avatar>
+          <h2>Foto do perfil escolhida</h2>
+          <ion-icon name="close" item-end (click)="photoPreview = null; this.form.get('photo').setValue(null)"></ion-icon>
+        </ion-item>
+      </ion-card>
   <button ion-button block color="green-dark" [disabled]="form.invalid">Criar o perfil</button>
     </form>
 </ion-content>
