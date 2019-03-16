@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams, TextInput} from 'ionic-angular';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 /**
  * Generated class for the CustomerCreatePage page.
@@ -15,16 +16,27 @@ import {IonicPage, NavController, NavParams, TextInput} from 'ionic-angular';
 })
 export class CustomerCreatePage {
 
+  form: FormGroup;
+
   @ViewChild('inputFilePhoto')
   inputFilePhoto: TextInput;
 
   constructor(
       public navCtrl: NavController,
-      public navParams: NavParams) {
+      public navParams: NavParams,
+      private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+        name: ['', [Validators.required, Validators.maxLength(255)]],
+        email: ['', [Validators.required, Validators.maxLength(255)]],
+    })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomerCreatePage');
+  }
+
+  submit() {
+
   }
 
   selectPhoto() {

@@ -11,19 +11,22 @@
 </ion-header>
 
 <ion-content padding>
+    {{form.valid | json }}
+    <form [formGroup]="form" (submit)="submit()">
   <ion-list>
     <ion-item>
       <ion-label stacked>Nome</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" formControlName="name"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label stacked>E-mail</ion-label>
-      <ion-input type="email"></ion-input>
+      <ion-input type="email" formControlName="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-input type="file" [hidden]="true" #inputFilePhoto></ion-input>
       <button ion-button color="dark-green" (click)="selectPhoto()">Escolher foto para o perfil</button>
     </ion-item>
   </ion-list>
-  <button ion-button block color="green-dark">Criar o perfil</button>
+  <button ion-button block color="green-dark" [disabled]="form.invalid">Criar o perfil</button>
+    </form>
 </ion-content>
