@@ -30,9 +30,9 @@ export class UserProfileComponent implements OnInit {
       private firebaseAuth: FirebaseAuthService
   ) {
       this.form = this.formBuilder.group({
-          name: ['', [Validators.required]],
-          email: ['', [Validators.required, Validators.email]],
-          password: ['', [Validators.required, Validators.min(fieldsOptions.price.validationMessage.minLength)]],
+          name: ['', [Validators.maxLength(fieldsOptions.name.validationMessage.maxLength)]],
+          email: ['', [Validators.email, Validators.maxLength(fieldsOptions.email.validationMessage.maxLength)]],
+          password: ['', [Validators.min(fieldsOptions.password.validationMessage.minLength), Validators.maxLength(fieldsOptions.password.validationMessage.maxLength)]],
           phone_number: null,
           token: null,
           photo: false
@@ -44,6 +44,10 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  get fieldOptions() : any {
+      return fieldsOptions;
   }
 
     submit(){
