@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseAuthProvider } from "../../providers/firebase-auth/firebase-auth";
 import {AuthProvider} from "../../providers/auth/auth";
 import {MainPage} from "../main/main";
+import {CustomerCreatePage} from "../customer-create/customer-create";
 
 
 /**
@@ -31,20 +32,11 @@ export class LoginPhoneNumberPage {
     // @ts-ignore
       const unsubscribed = this.firebaseAuth.firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-          this.authService
-              .login()
-              .subscribe((token) => {
-                  console.log(token);
-                  this.redirectToMainPage();
-                  console.log('redirecionar para o main');
-              }, (responseError) => {
-                this.redirectToCustumerCreatePage();
-                  console.log('redirecionar para a criação da conta do cliente');
-              });
+          this.handleAuthUser();
           unsubscribed();
       }
     });
-    this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
+    //this.firebaseAuth.getToken().then((token) => console.log(token), (error) => console.log(error));
     this.firebaseAuth.makePhoneNumberForm("#firebase-ui");
 
   }
@@ -54,6 +46,22 @@ export class LoginPhoneNumberPage {
     }
 
     redirectToCustumerCreatePage() {
+        this.navCtrl.push(CustomerCreatePage);
+    }
 
+    handleAuthUser() {
+        this.authService
+            .login()
+            .subscribe((token) => {
+                console.log(token);
+                this.redirectToMainPage();
+                console.log('redirecionar para o main');
+            }, (responseError) => {
+                this.firebaseAuth
+                    .makePhoneNumberForm("#firebase-ui")
+                    .then(() => this.handleAuthUser());
+                this.redirectToCustumerCreatePage();
+                console.log('redirecionar para a criação da conta do cliente');
+            });
     }
 }
