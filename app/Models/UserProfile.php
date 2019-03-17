@@ -139,7 +139,7 @@ class UserProfile extends Model
     {
         $profile = UserProfile::where('phone_number_token_to_change', $token)->firstOrFail();
         $phoneNumber = base64_decode($token);
-        $profile->phoneNumber = $phoneNumber;
+        $profile->phone_Number = $phoneNumber;
         $profile->phone_number_token_to_change = null;
         $profile->save();
 
