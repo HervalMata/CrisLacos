@@ -3,7 +3,10 @@
 namespace CrisLacos\Http\Controllers\Api;
 
 use CrisLacos\Http\Requests\CustomerRequest;
+use CrisLacos\Http\Requests\PhoneNumberToUpdateRequest;
 use CrisLacos\Models\User;
+use CrisLacos\Models\UserProfile;
+use CrisLacos\Rules\PhoneNumberUnique;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
 use CrisLacos\Firebase\Auth as FirebaseAuth;
@@ -30,6 +33,13 @@ class CustomerController extends Controller
         return [
             'token' => \Auth::guard('api')->login($user)
         ];
+    }
+
+    public function requestPhoneNumberUpdate(PhoneNumberToUpdateRequest $request)
+    {
+        $user = User::whereEmail($request->email)->first();
+        $phoneNumber = $this->getPhoneNumber($request->token);
+        $token = UserProfile::createTokenToChangePhoneNumber($user->profile, $phoneNumber);
     }
 
     private function getPhoneNumber($token)

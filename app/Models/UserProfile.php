@@ -57,6 +57,15 @@ class UserProfile extends Model
         return $photo ? $photo->hashName() : null;
     }
 
+    public static function createTokenToChangePhoneNumber($profile, string $phoneNumber)
+    {
+        $token = base64_encode($phoneNumber);
+        $profile->phone_number_token_to_change = $token;
+        $profile->save();
+
+        return $token;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
