@@ -4,6 +4,7 @@ namespace CrisLacos\Http\Controllers\Api;
 
 use CrisLacos\Http\Requests\CustomerRequest;
 use CrisLacos\Http\Requests\PhoneNumberToUpdateRequest;
+use CrisLacos\Mail\PhoneNumberChangeMail;
 use CrisLacos\Models\User;
 use CrisLacos\Models\UserProfile;
 use CrisLacos\Rules\PhoneNumberUnique;
@@ -57,6 +58,16 @@ class CustomerController extends Controller
     {
         $firebaseAuth = app(FirebaseAuth::class);
         return $firebaseAuth->phoneNumber($token);
+    }
+
+    /**
+     * @param $token
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePhoneNumber($token)
+    {
+        UserProfile::updatePhoneNumber($token);
+        return response()->json([], 204);
     }
 
 }

@@ -130,4 +130,19 @@ class UserProfile extends Model
         $path = self::photoDir();
         return $this->photo ? asset("storage/{$path}/{$this->$photo}") : 'https://gravatar.com/avatar/nouser.jpg';
     }
+
+    /**
+     * @param $token
+     * @return mixed
+     */
+    public static function updatePhoneNumber($token)
+    {
+        $profile = UserProfile::where('phone_number_token_to_change', $token)->firstOrFail();
+        $phoneNumber = base64_decode($token);
+        $profile->phoneNumber = $phoneNumber;
+        $profile->phone_number_token_to_change = null;
+        $profile->save();
+
+        return $profile;
+    }
 }
