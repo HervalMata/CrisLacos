@@ -35,13 +35,24 @@ class CustomerController extends Controller
         ];
     }
 
+    /**
+     * @param PhoneNumberToUpdateRequest $request
+     */
     public function requestPhoneNumberUpdate(PhoneNumberToUpdateRequest $request)
     {
         $user = User::whereEmail($request->email)->first();
         $phoneNumber = $this->getPhoneNumber($request->token);
         $token = UserProfile::createTokenToChangePhoneNumber($user->profile, $phoneNumber);
+
+        \Mail::to($user)->send(new PhoneNumberChangeMail($user, $token));
+
+        return response()->json([], 204);
     }
 
+    /**
+     * @param $token
+     * @return string
+     */
     private function getPhoneNumber($token)
     {
         $firebaseAuth = app(FirebaseAuth::class);

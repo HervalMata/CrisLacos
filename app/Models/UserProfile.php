@@ -57,6 +57,11 @@ class UserProfile extends Model
         return $photo ? $photo->hashName() : null;
     }
 
+    /**
+     * @param $profile
+     * @param string $phoneNumber
+     * @return string
+     */
     public static function createTokenToChangePhoneNumber($profile, string $phoneNumber)
     {
         $token = base64_encode($phoneNumber);
