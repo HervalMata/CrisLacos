@@ -2,25 +2,30 @@
 
 namespace CrisLacos\Http\Controllers\Api;
 
+use CrisLacos\Http\Requests\ChatGroupCreateRequest;
+use CrisLacos\Http\Requests\ChatGroupUpdateRequest;
+use CrisLacos\Http\Resources\ChatGroupResource;
 use Illuminate\Http\Request;
 use CrisLacos\Http\Controllers\Controller;
+use CrisLacos\Models\ChatGroup;
 
 class ChatGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        //
+        $chatGroups = ChatGroup::paginate();
+        return ChatGroupResource::collection($chatGroups);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -30,23 +35,25 @@ class ChatGroupController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ChatGroupCreateRequest $request
+     * @return ChatGroupResource
+     * @throws \Exception
      */
-    public function store(Request $request)
+    public function store(ChatGroupCreateRequest $request)
     {
-        //
+        $chatGroup = ChatGroup::createWithPhoto($request->all());
+        return new ChatGroupResource($chatGroup);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ChatGroup $chatGroup
+     * @return ChatGroupResource
      */
-    public function show($id)
+    public function show(ChatGroup $chatGroup)
     {
-        //
+        return new ChatGroupResource($chatGroup);
     }
 
     /**
@@ -63,23 +70,27 @@ class ChatGroupController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ChatGroupUpdateRequest $request
+     * @param ChatGroup $chatGroup
+     * @return ChatGroupResource
+     * @throws \Exception
      */
-    public function update(Request $request, $id)
+    public function update(ChatGroupUpdateRequest $request, ChatGroup $chatGroup)
     {
-        //
+        $chatGroup->updateWithPhoto($request->all());
+        return new ChatGroupResource($chatGroup);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param ChatGroup $chatGroup
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(ChatGroup $chatGroup)
     {
-        //
+        $chatGroup->delete();
+        return response()->json([], 204);
     }
 }

@@ -53,10 +53,13 @@ class ChatGroup extends Model
     /**
      * @param $photo
      */
-    private function deleteFile($photo)
+    private function deleteFile(UploadedFile $photo)
     {
-        $dir = self::photoDir();
-        \Storage::disk('public')->delete("{$dir}/{$this->$photo}");
+        $path =self::photosPath();
+        $filePath = "{$path}/{$photo->hashName()}";
+        if (file_exists($filePath)) {
+            \File::delete($filePath);
+        }
     }
 
     /**
@@ -84,5 +87,44 @@ class ChatGroup extends Model
     {
         $path = self::photoDir();
         return asset("storage/{$path}/{$this->photo}");
+    }
+
+    /**
+     * @param array $data
+     * @return ChatGroup
+     * @throws \Exception
+     */
+    public function updateWithPhoto(array $data) : ChatGroup
+    {
+
+        try {
+            if (isset($data['photo'])) {
+                self::uploadPhoto($data['photo']);
+                $this->deletePhoto();
+                $data['photo'] = $data['photo']->hashName();
+            }
+
+            \DB::beginTransaction();
+            $this->fill($data)->save();
+            \DB::commit();
+        } catch (\Exception $e) {
+            if (isset($data['photo'])) {
+                self::deleteFile($data['photo']);
+            }
+
+            \DB::rollBack();
+            throw $e;
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    private function deletePhoto()
+    {
+        $dir = self::photoDir();
+        \Storage::disk('public')->delete("{$dir}/{$this->photo}");
     }
 }
