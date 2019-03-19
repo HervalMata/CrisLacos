@@ -127,4 +127,9 @@ class ChatGroup extends Model
         $dir = self::photoDir();
         \Storage::disk('public')->delete("{$dir}/{$this->photo}");
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
