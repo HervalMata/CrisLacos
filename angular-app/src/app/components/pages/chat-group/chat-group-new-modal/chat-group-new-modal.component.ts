@@ -1,17 +1,16 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {User} from "../../../../model";
-import {ModalComponent} from "../../../bootstrap/modal/modal.component";
-import {UserHttpService} from "../../../../services/http/user-http.service";
-import {HttpErrorResponse} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import fieldsOptions from "../user-form/user-fields-options";
+import {ModalComponent} from "../../../bootstrap/modal/modal.component";
+import {HttpErrorResponse} from "@angular/common/http";
+import fieldsOptions from "../../chat-group/chat-group-form/chat-group-fields-options";
+import {ChatGroupHttpService} from "../../../../services/http/chat-group-http.service";
 
 @Component({
-  selector: 'user-new-modal',
-  templateUrl: './user-new-modal.component.html',
-  styleUrls: ['./user-new-modal.component.css']
+  selector: 'chat-group-new-modal',
+  templateUrl: './chat-group-new-modal.component.html',
+  styleUrls: ['./chat-group-new-modal.component.css']
 })
-export class UserNewModalComponent implements OnInit {
+export class ChatGroupNewModalComponent implements OnInit {
 
     form: FormGroup;
     errors = {};
@@ -23,13 +22,14 @@ export class UserNewModalComponent implements OnInit {
     @Output() onError: EventEmitter<HttpErrorResponse> = new EventEmitter<HttpErrorResponse>();
 
     constructor(
-        public userHttp: UserHttpService,
+        public chatGroupHttp: ChatGroupHttpService,
         private formBuilder: FormBuilder
     ) {
+        const maxLength = fieldsOptions.name.validationMessage.maxLength;
+        const minLength = fieldsOptions.name.validationMessage.minLength;
         this.form = this.formBuilder.group({
-            name: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.min(fieldsOptions.password.validationMessage.minLength)]],
+            name: ['', [Validators.required, Validators.maxLength(maxLength), Validators.minLength(minLength)]],
+            photo: [null, [Validators.required]],
         });
     }
 
@@ -37,14 +37,13 @@ export class UserNewModalComponent implements OnInit {
     }
 
     submit(){
-        this.userHttp.create(this.form.value)
-            .subscribe((user) => {
+        this.chatGroupHttp.create(this.form.value)
+            .subscribe((chatGroup) => {
                 this.form.reset({
                     name: '',
-                    email: '',
-                    password: ''
+                    photo: ''
                 });
-                this.onSuccess.emit(user);
+                this.onSuccess.emit(chatGroup);
                 this.modal.hide();
             }, responseError => {
                 if (responseError.status === 422) {

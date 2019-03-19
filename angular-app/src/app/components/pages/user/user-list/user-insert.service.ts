@@ -16,13 +16,14 @@ export class UserInsertService {
         this._userListComponent = value;
     }
 
-    showModalInsert() {
+    showModalInsert(userId: number) {
+        this._userListComponent.userId = userId;
         this._userListComponent.userEditModal.showModal();
     }
 
     onInsertSuccess($event: any) {
         console.log($event);
-        this.notifyMessage.success(`Usuário cadastradocom sucesso!.`);
+        this.notifyMessage.success(`Usuário cadastrado com sucesso!.`);
         this._userListComponent.getUsers();
     }
 
