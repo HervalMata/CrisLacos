@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserHttpService} from "../../../services/http/user-http.service";
 import {UserProfileHttpService} from "../../../services/http/user-profile-http.service";
 import {NotifyMessageService} from "../../../services/notify-message.service";
 import fieldsOptions from "../user/user-form/user-fields-options";

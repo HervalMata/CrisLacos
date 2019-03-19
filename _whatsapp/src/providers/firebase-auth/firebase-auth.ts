@@ -21,6 +21,10 @@ export class FirebaseAuthProvider {
     firebase.initializeApp(firebaseConfig);
   }
 
+  get firebase() {
+     return firebase;
+  }
+
   async makePhoneNumberForm(selectorElement: string) {
       await this.getFirebaseUI();
       return new Promise((resolve) => {
@@ -40,61 +44,55 @@ export class FirebaseAuthProvider {
 
     private async getFirebaseUI() : Promise<any> {
         return new Promise(((resolve, reject) => {
-          if (window.hasOwnProperty('firebaseui')) {
-            resolve(firebaseui);
-            return;
-          }
+            if (window.hasOwnProperty('firebaseui')) {
+                resolve(firebaseui);
+                return;
+            }
 
-          scriptjs('http://www.gstatic.com/firebasejs/ui/3.4.0/firebase-ui-auth__pt.js', () => {
-            resolve(firebaseui);
-          });
+            scriptjs('http://www.gstatic.com/firebasejs/ui/3.4.0/firebase-ui-auth__pt.js', () => {
+                resolve(firebaseui);
+            });
         }));
     }
 
-    getFirebase() {
-      return firebase;
+    async getToken() : Promise<string> {
+        try {
+            const user = await this.getUser();
+            if (!user) {
+                throw new Error('User not found!');
+            }
+
+            const token = await user.getIdTokenResult();
+            return token.token;
+        } catch (e) {
+            return Promise.reject(e);
+        }
     }
 
-    getUser() : Promise<firebase.User | null> {
+    getUser(): Promise<firebase.User | null>{
         const currentUser = this.getCurrentUser();
 
-        if (currentUser) {
-          return Promise.resolve(currentUser);
+        if(currentUser){
+            return Promise.resolve(currentUser);
         }
-            return new Promise((resolve, reject) => {
-        // @ts-ignore
-                const unsubscribed = this.firebase
-            .auth()
-            .onAuthStateChanged(
-                (user) => {
-                  resolve(user);
-                  unsubscribed();
-                },
-                (error) => {
-                  reject(error);
-                  unsubscribed();
-                }
-            );
-      });
+
+        return new Promise((resolve, reject) => {
+            const unsubscribed = this.firebase
+                .auth()
+                .onAuthStateChanged(
+                    (user) => {
+                        resolve(user);
+                        unsubscribed();
+                    },
+                    (error) => {
+                        reject(error)
+                        unsubscribed();
+                    });
+        });
     }
 
-    private getCurrentUser() {
-        // @ts-ignore
+    private getCurrentUser(): firebase.User | null {
         return this.firebase.auth().currentUser;
-    }
-
-    async getToken() : Promise<string> {
-      try {
-          const user = await this.getUser();
-          if (!user) {
-            throw new Error('User not found!');
-          }
-
-          const token = await user.getIdTokenResult();
-          return token.token;
-      } catch (e) {
-          return Promise.reject(e);
-      }
     }
 
     private makeFormFirebaseUI(selectorElement, uiConfig) {
