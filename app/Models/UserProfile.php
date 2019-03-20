@@ -3,11 +3,14 @@
 declare(strict_types=1);
 namespace CrisLacos\Models;
 
+use CrisLacos\Firebase\FirebaseSync;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
 class UserProfile extends Model
 {
+    use FirebaseSync;
+
     const BASE_PATH   = 'app/public';
     const DIR_USERS   = 'users';
     const DIR_USER_PHOTO = self::DIR_USERS . '/photos';
@@ -127,8 +130,13 @@ class UserProfile extends Model
      */
     public function getPhotoUrlAttribute()
     {
+        return $this->photo ? asset("storage/{$path}/{$this->$photo_url_base}") : 'https://gravatar.com/avatar/nouser.jpg';
+    }
+
+    public function getPhotoUrlBaseAttribute()
+    {
         $path = self::photoDir();
-        return $this->photo ? asset("storage/{$path}/{$this->$photo}") : 'https://gravatar.com/avatar/nouser.jpg';
+        return $this->photo ? "{$path}/{$this->$photo}" : 'https://gravatar.com/avatar/nouser.jpg';
     }
 
     /**
@@ -144,5 +152,10 @@ class UserProfile extends Model
         $profile->save();
 
         return $profile;
+    }
+
+    protected function syncFbSet()
+    {
+        $this->user()->syncFbSetCustom();
     }
 }
