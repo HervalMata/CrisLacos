@@ -87,7 +87,7 @@ class ChatGroup extends Model
     public function getPhotoUrlAttribute()
     {
         $path = self::photoDir();
-        return asset("storage/{$path}/{$this->photo}");
+        return asset("storage/{$this->photo_url_base}");
     }
 
     /**
@@ -129,8 +129,39 @@ class ChatGroup extends Model
         \Storage::disk('public')->delete("{$dir}/{$this->photo}");
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     *
+     */
+    public function syncFbRemove()
+    {
+        $this->syncFbSet();
+    }
+
+    /**
+     *
+     */
+    protected function syncFbSet()
+    {
+        $data = $this->toArray();
+        $data['photo_url'] = $this->photo_url_base;
+        unset($data['photo']);
+        $this->getModelReference()->update($data);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhotoUrlBaseAttribute()
+    {
+        $path = self::photoDir();
+        return "{$path}/{$this->photo}";
     }
 }
