@@ -18,8 +18,10 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <super-tabs>
-    <super-tab [root]="chatGroupList" title="Grupos"></super-tab>
-  </super-tabs>
+<ion-content>
+   <super-tabs toolbarBackground="gree-dark" toolbarColor="light" indicatorColor="light">
+       <super-tab [root]="chatGroupList" title="Grupos"></super-tab>
+       <super-tab [root]="chatGroupList" title="Produtos"></super-tab>
+       <super-tab [root]="chatGroupList" title="Pedidos"></super-tab>
+   </super-tabs>
 </ion-content>

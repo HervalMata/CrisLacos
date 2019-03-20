@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {ChatGroupListComponent} from "../../../../angular-app/src/app/components/pages/chat-group/chat-group-list/chat-group-list.component";
+import {ChatGroupListComponent} from "../../components/chat-group-list/chat-group-list";
 
 /**
  * Generated class for the MainPage page.
