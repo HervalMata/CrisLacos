@@ -3,6 +3,7 @@
 declare(strict_types=1);
 namespace CrisLacos\Models;
 
+use CrisLacos\Firebase\FirebaseSync;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
@@ -10,7 +11,7 @@ use Illuminate\Support\Collection;
 
 class ChatGroup extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, FirebaseSync;
 
     const BASE_PATH = 'app/public';
     const DIR_CHAT_GROUPS = 'chat_groups';
